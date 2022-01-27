@@ -6,7 +6,26 @@ namespace CyberPuzzle.Model
 {
     internal class Piece : ObservableObject
     {
-        public string Word { get; set; }
+        private static Brush NormalBrush;
+        private static Brush HighlightBrush;
+        private static Brush DisabledBrush;
+
+        static Piece()
+        {
+            NormalBrush = App.Current.TryFindResource("ForegroundYellowBrush") as Brush;
+            HighlightBrush = App.Current.TryFindResource("HighlightCyanBrush") as Brush;
+            DisabledBrush = App.Current.TryFindResource("DisableBrush") as Brush;
+        }
+
+        private string word;
+        public string Word
+        {
+            get
+            {
+                return IsSelected ? "[ ]" : word;
+            }
+            private set => word = value;
+        }
 
         /// <summary>
         /// whether this button has been clicked and therefore cannot be clicked anymore
@@ -30,7 +49,7 @@ namespace CyberPuzzle.Model
         public bool IsAvailable { get; set; }
 
         [DependsOn(nameof(IsSelected))]
-        public Brush Foreground => IsSelected ? Brushes.Orange : Brushes.Black;
+        public Brush Foreground => IsSelected ? DisabledBrush : NormalBrush;
 
         public Piece(string word, (int, int) pos)
         {

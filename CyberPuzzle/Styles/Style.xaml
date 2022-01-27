@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Color x:Key="SuccessGreen">#34df91</Color>
+    <Color x:Key="FailRed">#f56a62</Color>
+    <Color x:Key="ForegroundYellow">#daf173</Color>
+    <Color x:Key="BackgroundDark">#292431</Color>
+    <Color x:Key="HighlightCyan">#79e4ea</Color>
+    <Color x:Key="HighlightDarkYellow">#383a32</Color>
+    <Color x:Key="HighlightGray">#444756</Color>
+    <Color x:Key="ForegroundWhite">#ffffff</Color>
+    <Color x:Key="DisableDark">#6c4f7a</Color>
+
+    <SolidColorBrush x:Key="SuccessGreenBrush" Color="{StaticResource SuccessGreen}" />
+    <SolidColorBrush x:Key="FailRedBrush" Color="{StaticResource FailRed}" />
+    <SolidColorBrush x:Key="ForegroundYellowBrush" Color="{StaticResource ForegroundYellow}" />
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="HighlightCyanBrush" Color="{StaticResource HighlightCyan}" />
+    <SolidColorBrush x:Key="HighlightDarkYellowBrush" Color="{StaticResource HighlightDarkYellow}" />
+    <SolidColorBrush x:Key="HighlightGrayBrush" Color="{StaticResource HighlightGray}" />
+    <SolidColorBrush x:Key="ForegroundWhiteBrush" Color="{StaticResource ForegroundWhite}" />
+    <SolidColorBrush x:Key="DisableDarkBrush" Color="{StaticResource DisableDark}" />
+
+    <Style x:Key="WordButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="{StaticResource HighlightCyanBrush}" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Background" Value="{StaticResource HighlightGrayBrush}" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource DisableDarkBrush}" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="TextElement.Foreground" Value="{Binding Foreground}" />-->
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+</ResourceDictionary>
