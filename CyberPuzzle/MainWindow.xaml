@@ -4,45 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CyberPuzzle"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
         Title="MainWindow"
         Width="600"
         Height="450"
+        FontFamily="Consolas"
         mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <Color x:Key="MyColor">Red</Color>
-        <SolidColorBrush x:Key="MyBrush" Color="{StaticResource MyColor}" />
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2"
-                                   SnapsToDevicePixels="true"
-                                   Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                                   StrokeDashArray="1 2"
-                                   StrokeThickness="1" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
-        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
-        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
-        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
-        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
-        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
-        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
-        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
-        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
         <Style x:Key="WordButton" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="{StaticResource Button.Static.Background}" />
-            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}" />
+            <Setter Property="Background" Value="LightSkyBlue" />
+            <Setter Property="BorderBrush" Value="#FF707070" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="FontSize" Value="26" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="Padding" Value="1" />
             <Setter Property="Template">
@@ -58,31 +34,30 @@
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               Focusable="False"
-                                              TextBlock.Foreground="{TemplateBinding Foreground}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              TextBlock.Foreground="{TemplateBinding Foreground}" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsDefaulted" Value="true">
+                            <!--<Trigger Property="IsDefaulted" Value="true">
                                 <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
-                            </Trigger>
+                            </Trigger>-->
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource Button.MouseOver.Background}" />
-                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.MouseOver.Border}" />
+                                <Setter TargetName="border" Property="Background" Value="#FFBEE6FD" />
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
+                            <!--<Trigger Property="IsPressed" Value="true">
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Pressed.Background}" />
                                 <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Pressed.Border}" />
-                            </Trigger>
+                            </Trigger>-->
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource Button.Disabled.Background}" />
-                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Button.Disabled.Border}" />
-                                <Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />
+                                <Setter TargetName="border" Property="Background" Value="LightGray" />
+                                <!--<Setter TargetName="contentPresenter" Property="TextElement.Foreground" Value="{StaticResource Button.Disabled.Foreground}" />-->
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="TextElement.Foreground" Value="{Binding Foreground}" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
         </Style>
     </Window.Resources>
@@ -101,17 +76,19 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                                Background="{Binding Background}"
                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}"
                                 CommandParameter="{Binding}"
                                 IsEnabled="{Binding IsEnabled, Mode=OneWay}"
                                 Style="{StaticResource WordButton}">
-                            <TextBlock Text="{Binding Word}" Foreground="{Binding Foreground}" FontSize="26"/>
+                            <TextBlock Text="{Binding Word}" />
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
-        <ListBox Grid.Column="1" ItemsSource="{Binding SelectedWords}" />
+        <ListBox Grid.Column="1"
+                 HorizontalContentAlignment="Center"
+                 FontSize="24"
+                 ItemsSource="{Binding SelectedWords}" />
     </Grid>
 </Window>

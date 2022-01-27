@@ -32,9 +32,6 @@ namespace CyberPuzzle.Model
         [DependsOn(nameof(IsSelected))]
         public Brush Foreground => IsSelected ? Brushes.Orange : Brushes.Black;
 
-        [DependsOn(nameof(IsEnabled))]
-        public Brush Background => IsEnabled ? Brushes.LightSkyBlue : Brushes.LightGray;
-
         public Piece(string word, (int, int) pos)
         {
             Word = word;
