@@ -13,15 +13,21 @@
                 <ControlTemplate TargetType="ContentControl">
                     <Border HorizontalAlignment="Center"
                             VerticalAlignment="Top"
-                            BorderThickness="{StaticResource PieceBorderThickness}"
-                            BorderBrush="{StaticResource ForegroundYellowBrush}">
+                            BorderBrush="{StaticResource ForegroundYellowBrush}"
+                            BorderThickness="{StaticResource PieceBorderThickness}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Border Background="{StaticResource ForegroundYellowBrush}">
-                                <TextBlock Margin="5" FontSize="{StaticResource WordBoxFontSize}" Foreground="#657800">CODE MATRIX</TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="5"
+                                               FontSize="{StaticResource WordBoxFontSize}"
+                                               Foreground="#657800">
+                                        CODE MATRIX
+                                    </TextBlock>
+                                </StackPanel>
                             </Border>
                             <ContentPresenter Grid.Row="1" />
                         </Grid>
@@ -38,8 +44,8 @@
         <Setter Property="FontSize" Value="{StaticResource WordFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="Height" Value="{StaticResource PieceWidth}" />
+        <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -97,7 +103,7 @@
     <Style x:Key="RightPanelWordBox" TargetType="Border">
         <Setter Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
-        <Setter Property="Margin" Value="0,10,10,10" />
+        <Setter Property="Margin" Value="0,10,15,10" />
         <Setter Property="Height" Value="{StaticResource WordBoxWidth}" />
         <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
         <Setter Property="TextElement.FontSize" Value="{StaticResource WordBoxFontSize}" />
