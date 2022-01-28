@@ -7,10 +7,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
         Title="Cyberpuzzle 2077"
-        Width="800"
+        Width="900"
         Height="450"
         Background="{StaticResource BackgroundDarkBrush}"
         FontFamily="Consolas"
+        Icon="{x:Null}"
+        ResizeMode="CanMinimize"
         mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />
@@ -20,12 +22,11 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Border Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                Margin="10"
+        <ContentControl Style="{StaticResource LeftPanelStyle}" Margin="10,10,0,10">
+            <Border Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                 Padding="1"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                BorderBrush="Gray">
+                BorderBrush="Gray"
+                IsEnabled="{Binding IsGameNotFinished}">
             <ItemsControl ItemsSource="{Binding Puzzle}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -34,10 +35,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                                Height="60"
-                                IsEnabled="{Binding IsEnabled, Mode=OneWay}"
-                                Style="{StaticResource WordButton}">
+                        <Button IsEnabled="{Binding IsEnabled, Mode=OneWay}" Style="{StaticResource WordButton}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}" CommandParameter="{Binding}" />
@@ -52,20 +50,27 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
-        <ItemsControl Grid.Column="1" Margin="0,10,10,10" ItemsSource="{Binding SelectedWords}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Background="{StaticResource BackgroundDarkBrush}" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Margin="15"
-                               FontSize="26"
-                               Foreground="{StaticResource ForegroundWhiteBrush}"
-                               Text="{Binding Word}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ContentControl>
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBlock Style="{StaticResource Header}">BUFFER</TextBlock>
+            <ItemsControl Background="Transparent"
+                     BorderThickness="0"
+                     ItemsSource="{Binding SelectedWords}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource RightPanelWordBox}">
+                            <TextBlock d:Text="FF"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--<TextBlock Style="{StaticResource Header}">SEQUENCE REQUIRED TO UPLOAD</TextBlock>-->
+        </StackPanel>
     </Grid>
 </Window>

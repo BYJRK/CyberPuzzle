@@ -1,15 +1,43 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colors.xaml" />
+        <ResourceDictionary Source="Values.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="LeftPanelStyle" TargetType="ContentControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContentControl">
+                    <Border HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            BorderThickness="{StaticResource PieceBorderThickness}"
+                            BorderBrush="{StaticResource ForegroundYellowBrush}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Border Background="{StaticResource ForegroundYellowBrush}">
+                                <TextBlock Margin="5" FontSize="{StaticResource WordBoxFontSize}" Foreground="#657800">CODE MATRIX</TextBlock>
+                            </Border>
+                            <ContentPresenter Grid.Row="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <Style x:Key="WordButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource HighlightCyanBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontSize" Value="{StaticResource WordFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
+        <Setter Property="Height" Value="{StaticResource PieceWidth}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="1" />
         <Setter Property="Template">
@@ -35,25 +63,59 @@
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!--  the default button style  -->
                         <Trigger Property="IsEnabled" Value="True">
                             <Setter Property="Background" Value="{StaticResource HighlightGrayBrush}" />
                         </Trigger>
+                        <!--  if the button will be available in the next turn  -->
                         <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
                             <Setter Property="Background" Value="{StaticResource HighlightDarkYellowBrush}" />
                         </DataTrigger>
+                        <!--  if the button has been selected and is no longer available  -->
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource DisableDarkBrush}" />
                         </DataTrigger>
+                        <!--  make the current piece pop if the mouse is over  -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderThickness" Value="2" />
+                            <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
                             <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
                         </Trigger>
+                        <!--  when game is over, all buttons will be disabled  -->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsGameNotFinished}" Value="False">
+                            <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource DisableDarkBrush}" />
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--<Setter Property="TextElement.Foreground" Value="{Binding Foreground}" />-->
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+    </Style>
+
+    <Style x:Key="RightPanelWordBox" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
+        <Setter Property="Margin" Value="0,10,10,10" />
+        <Setter Property="Height" Value="{StaticResource WordBoxWidth}" />
+        <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
+        <Setter Property="TextElement.FontSize" Value="{StaticResource WordBoxFontSize}" />
+        <Setter Property="TextElement.Foreground" Value="{StaticResource ForegroundYellowBrush}" />
+        <Style.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Text" Value="{Binding Word}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="Header" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="{StaticResource WordBoxFontSize}" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Margin" Value="0,10" />
     </Style>
 
 </ResourceDictionary>

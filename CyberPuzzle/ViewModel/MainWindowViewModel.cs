@@ -4,7 +4,6 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using PropertyChanged;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -23,11 +22,10 @@ namespace CyberPuzzle.ViewModel
         public MainWindowViewModel()
         {
             RandomHelper.Init(1335);
-            GenerateRandomPuzzle(6, 5);
             PieceClickCommand = new RelayCommand<Piece>(piece =>
             {
                 piece.IsSelected = true;
-                SelectedWords.Add(piece);
+                SelectedWords[Index++] = piece;
                 CurrentPosition = piece.Position;
                 Direction = !Direction;
                 UpdateAvailability();
@@ -36,6 +34,9 @@ namespace CyberPuzzle.ViewModel
             {
                 UpdateHighlight(piece);
             });
+
+            NewPuzzle(6, 7);
+
             UpdateAvailability();
         }
 
@@ -45,6 +46,10 @@ namespace CyberPuzzle.ViewModel
         /// the size of the puzzle
         /// </summary>
         public int PuzzleSize => (int)Math.Sqrt(Puzzle.Count);
+
+        public int Index { get; private set; }
+
+        public bool IsGameNotFinished => Index < SelectedWords.Count;
 
         /// <summary>
         /// the command when the piece is clicked
@@ -84,14 +89,14 @@ namespace CyberPuzzle.ViewModel
         /// </summary>
         private void UpdateAvailability()
         {
-            foreach (var piece in Puzzle)
+            foreach (var p in Puzzle)
             {
-                if (Direction && piece.Position.Y == CurrentPosition.Y)
-                    piece.IsAvailable = true;
-                else if (!Direction && piece.Position.X == CurrentPosition.X)
-                    piece.IsAvailable = true;
+                if (Direction && p.Position.Y == CurrentPosition.Y)
+                    p.IsAvailable = true;
+                else if (!Direction && p.Position.X == CurrentPosition.X)
+                    p.IsAvailable = true;
                 else
-                    piece.IsAvailable = false;
+                    p.IsAvailable = false;
             }
         }
 
@@ -114,6 +119,20 @@ namespace CyberPuzzle.ViewModel
             }
         }
 
+        private void NewPuzzle(int size, int maxLength)
+        {
+            if (size != 5 && size != 6)
+                throw new NotImplementedException("size other than 5 or 6 is not supported.");
+
+            Puzzle.Clear();
+            SelectedWords.Clear();
+            for (int i = 0; i < maxLength; i++)
+                SelectedWords.Add(null);
+            Index = 0;
+
+            GenerateRandomPuzzle(size, size - 1);
+        }
+
         /// <summary>
         /// generate a random puzzle with given side length
         /// </summary>
@@ -124,9 +143,6 @@ namespace CyberPuzzle.ViewModel
         {
             var count = wordCount ?? Words.Length;
             var words = RandomHelper.Sample(Words, count).ToArray();
-
-            Puzzle.Clear();
-            SelectedWords.Clear();
 
             for (int i = 0; i < size * size; i++)
             {
