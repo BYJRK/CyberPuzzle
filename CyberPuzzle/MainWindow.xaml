@@ -19,7 +19,12 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Border Margin="10" Padding="1" BorderBrush="Gray">
+        <Border Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+                Margin="10"
+                Padding="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderBrush="Gray">
             <ItemsControl ItemsSource="{Binding Puzzle}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -29,6 +34,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+                                Height="60"
                                 Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}"
                                 CommandParameter="{Binding}"
                                 IsEnabled="{Binding IsEnabled, Mode=OneWay}"

@@ -1,4 +1,5 @@
-﻿using CyberPuzzle.Model;
+﻿using CyberPuzzle.Helpers;
+using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using PropertyChanged;
@@ -16,6 +17,18 @@ namespace CyberPuzzle.ViewModel
         {
              "1C", "55", "7A", "BD", "E9", "FF"
         };
+
+        #region Constructor
+
+        public MainWindowViewModel()
+        {
+            RandomHelper.Init(1335);
+            GenerateRandomPuzzle(6, 5);
+            PieceClickCommand = new RelayCommand<Piece>(PieceClick);
+            UpdateAvailability();
+        }
+
+        #endregion
 
         /// <summary>
         /// the size of the puzzle
@@ -43,13 +56,6 @@ namespace CyberPuzzle.ViewModel
         [DoNotNotify]
         public bool Direction { get; set; } = true;
 
-        public MainWindowViewModel()
-        {
-            GenerateRandomPuzzle(6, 1334, 5);
-            PieceClickCommand = new RelayCommand<Piece>(PieceClick);
-            UpdateAvailability();
-        }
-
         private void UpdateAvailability()
         {
             foreach (var piece in Puzzle)
@@ -72,36 +78,23 @@ namespace CyberPuzzle.ViewModel
             UpdateAvailability();
         }
 
-        private void GenerateRandomPuzzle(int size, int seed, int? wordCount = null)
+        /// <summary>
+        /// generate a random puzzle with given side length
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="seed"></param>
+        /// <param name="wordCount"></param>
+        private void GenerateRandomPuzzle(int size, int? wordCount = null)
         {
-            var rnd = new Random(seed);
-
-            var words = (string[])Words.Clone();
-            Shuffle(words, rnd);
-            if (wordCount.HasValue)
-                words = words.Take(wordCount.Value).ToArray();
-            else
-                wordCount = Words.Length;
+            var count = wordCount ?? Words.Length;
+            var words = RandomHelper.Sample(Words, count).ToArray();
 
             Puzzle.Clear();
             SelectedWords.Clear();
 
             for (int i = 0; i < size * size; i++)
             {
-                Puzzle.Add(new Piece(words[rnd.Next(wordCount.Value)], (i % size, i / size)));
-            }
-        }
-
-        public static void Shuffle<T>(IList<T> list, Random rnd)
-        {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = rnd.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+                Puzzle.Add(new Piece(words[RandomHelper.Rnd.Next(count)], (i % size, i / size)));
             }
         }
     }
