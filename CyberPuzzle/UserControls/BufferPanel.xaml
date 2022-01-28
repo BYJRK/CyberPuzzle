@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="CyberPuzzle.UserControls.BufferPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CyberPuzzle.UserControls"
+             xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
+             d:DesignHeight="450"
+             d:Background="Gray"
+             d:DesignWidth="800"
+             mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <vm:MainWindowViewModel />
+    </d:UserControl.DataContext>
+    <StackPanel>
+        <TextBlock Grid.Column="1"
+                   Height="28"
+                   Margin="10,20,10,10"
+                   VerticalAlignment="Top"
+                   Style="{StaticResource Header}"><Run Text="BUFFER" /></TextBlock>
+        <Border Margin="10,10,10,0"
+                Padding="10"
+                HorizontalAlignment="Left"
+                BorderBrush="{StaticResource ForegroundYellowBrush}"
+                BorderThickness="{StaticResource PieceBorderThickness}">
+            <ItemsControl Grid.Column="1"
+                          VerticalAlignment="Top"
+                          Background="Transparent"
+                          BorderThickness="0"
+                          ItemsSource="{Binding SelectedWords}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource WordBox}">
+                            <Grid>
+                                <Rectangle />
+                                <TextBlock d:Text="FF" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Border>
+    </StackPanel>
+</UserControl>

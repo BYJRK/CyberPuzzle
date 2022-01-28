@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:CyberPuzzle"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
+        xmlns:uc="clr-namespace:CyberPuzzle.UserControls"
         Title="Cyberpuzzle 2077"
-        Width="900"
-        Height="450"
+        Width="960"
+        Height="540"
         Background="{StaticResource BackgroundDarkBrush}"
         FontFamily="Consolas"
         ResizeMode="CanMinimize"
@@ -22,116 +23,10 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Canvas Width="20"
-                Height="20"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Panel.ZIndex="1"
-                Visibility="Collapsed">
-            <Canvas.Resources>
-                <Style TargetType="Path">
-                    <Setter Property="Data" Value="{StaticResource IconTrianglePath}" />
-                    <Setter Property="Width" Value="7" />
-                    <Setter Property="Height" Value="10" />
-                    <Setter Property="StrokeThickness" Value="0.5" />
-                    <Setter Property="Stretch" Value="Fill" />
-                    <Setter Property="Stroke" Value="Black" />
-                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-                </Style>
-            </Canvas.Resources>
-            <Path Canvas.Top="13" Fill="Black" />
-            <Path Canvas.Left="2.6"
-                  Canvas.Top="13"
-                  Fill="Black">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180" />
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path Canvas.Left="12.9"
-                  Canvas.Top="13"
-                  Fill="Black" />
-            <Path Canvas.Left="15.5"
-                  Canvas.Top="13"
-                  Fill="Black">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180" />
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path Canvas.Top="0" Fill="Black" />
-            <Path Canvas.Left="2.6" Stretch="Fill">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180" />
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path Canvas.Left="12.9" />
-            <Path Canvas.Left="15.5">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180" />
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </Canvas>
+        <uc:CodeMatrix Margin="10,10,10,10" DataContext="{Binding}" />
 
-        <ContentControl Margin="10,10,0,10" Style="{StaticResource LeftPanelStyle}">
-            <Border Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
-                    BorderBrush="Gray"
-                    IsEnabled="{Binding IsGameNotFinished}">
-                <ItemsControl ItemsSource="{Binding Puzzle}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <UniformGrid Columns="{Binding PuzzleSize}" Rows="{Binding PuzzleSize}" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Button IsEnabled="{Binding IsEnabled, Mode=OneWay}" Style="{StaticResource WordButton}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}" CommandParameter="{Binding}" />
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="MouseEnter">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceMouseEnterCommand}" CommandParameter="{Binding}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                                <TextBlock Text="{Binding DisplayWord}" />
-                            </Button>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Border>
-        </ContentControl>
-        <TextBlock Grid.Column="1"
-                   Margin="10,20,10,0"
-                   VerticalAlignment="Top"
-                   Style="{StaticResource Header}"
-                   d:LayoutOverrides="Width"><Run Text="BUFFER" /></TextBlock>
-        <ItemsControl Grid.Column="1"
-                      Margin="10,56,10,0"
-                      VerticalAlignment="Top"
-                      Background="Transparent"
-                      BorderThickness="0"
-                      ItemsSource="{Binding SelectedWords}"
-                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      d:LayoutOverrides="Width">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Style="{StaticResource RightPanelWordBox}">
-                        <TextBlock d:Text="FF" />
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <StackPanel Grid.Column="1">
+            <uc:BufferPanel DataContext="{Binding}" />
+        </StackPanel>
     </Grid>
 </Window>

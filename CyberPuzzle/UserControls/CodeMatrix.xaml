@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="CyberPuzzle.UserControls.CodeMatrix"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CyberPuzzle.UserControls"
+             xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:Background="Gray"
+             mc:Ignorable="d">
+    <d:UserControl.DataContext>
+        <vm:MainWindowViewModel />
+    </d:UserControl.DataContext>
+
+    <Border HorizontalAlignment="Stretch"
+            VerticalAlignment="Top"
+            BorderBrush="{StaticResource ForegroundYellowBrush}"
+            BorderThickness="{StaticResource PieceBorderThickness}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border Background="{StaticResource ForegroundYellowBrush}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="5"
+                               FontSize="{StaticResource WordBoxFontSize}"
+                               Foreground="#657800">
+                        CODE MATRIX
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1"
+                    Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+                    BorderBrush="Gray"
+                    IsEnabled="{Binding IsGameNotFinished}">
+                <ItemsControl ItemsSource="{Binding Puzzle}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="{Binding PuzzleSize}" Rows="{Binding PuzzleSize}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button IsEnabled="{Binding IsEnabled, Mode=OneWay}" Style="{StaticResource WordButton}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="Click">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}" CommandParameter="{Binding}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceMouseEnterCommand}" CommandParameter="{Binding}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Text="{Binding DisplayWord}" />
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>
