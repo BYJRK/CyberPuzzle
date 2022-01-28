@@ -24,7 +24,18 @@ namespace CyberPuzzle.ViewModel
         {
             RandomHelper.Init(1335);
             GenerateRandomPuzzle(6, 5);
-            PieceClickCommand = new RelayCommand<Piece>(PieceClick);
+            PieceClickCommand = new RelayCommand<Piece>(piece =>
+            {
+                piece.IsSelected = true;
+                SelectedWords.Add(piece);
+                CurrentPosition = piece.Position;
+                Direction = !Direction;
+                UpdateAvailability();
+            });
+            PieceMouseEnterCommand = new RelayCommand<Piece>(piece =>
+            {
+                UpdateHighlight(piece);
+            });
             UpdateAvailability();
         }
 
@@ -40,9 +51,21 @@ namespace CyberPuzzle.ViewModel
         /// </summary>
         public ICommand PieceClickCommand { get; private set; }
 
+        /// <summary>
+        /// the command when the mouse is on the piece and indicates the pieces on the same row
+        /// or column will be available in the next turn
+        /// </summary>
+        public ICommand PieceMouseEnterCommand { get; private set; }
+
+        /// <summary>
+        /// the array saving the pieces and will be showing on the left board
+        /// </summary>
         public ObservableCollection<Piece> Puzzle { get; private set; } = new();
 
-        public ObservableCollection<string> SelectedWords { get; set; } = new();
+        /// <summary>
+        /// the selected words
+        /// </summary>
+        public ObservableCollection<Piece> SelectedWords { get; set; } = new();
 
         /// <summary>
         /// the coordinates of the last clicked piece
@@ -56,6 +79,9 @@ namespace CyberPuzzle.ViewModel
         [DoNotNotify]
         public bool Direction { get; set; } = true;
 
+        /// <summary>
+        /// update the availablility of all pieces according to the current position and direction
+        /// </summary>
         private void UpdateAvailability()
         {
             foreach (var piece in Puzzle)
@@ -69,13 +95,23 @@ namespace CyberPuzzle.ViewModel
             }
         }
 
-        private void PieceClick(Piece p)
+        /// <summary>
+        /// update the highlight property of all pieces according to the current piece the mouse is on and direction
+        /// </summary>
+        private void UpdateHighlight(Piece piece)
         {
-            p.IsSelected = true;
-            SelectedWords.Add(p.Word);
-            CurrentPosition = p.Position;
-            Direction = !Direction;
-            UpdateAvailability();
+            foreach (var p in Puzzle)
+            {
+                // the current piece is shown as enabled button style
+                if (p == piece)
+                    p.IsHighlighted = false;
+                else if (!Direction && p.Position.Y == piece.Position.Y)
+                    p.IsHighlighted = true;
+                else if (Direction && p.Position.X == piece.Position.X)
+                    p.IsHighlighted = true;
+                else
+                    p.IsHighlighted = false;
+            }
         }
 
         /// <summary>

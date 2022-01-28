@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="SuccessGreen">#34df91</Color>
+    <Color x:Key="FailRed">#f56a62</Color>
+    <Color x:Key="ForegroundYellow">#daf173</Color>
+    <Color x:Key="BackgroundDark">#292431</Color>
+    <Color x:Key="HighlightCyan">#79e4ea</Color>
+    <Color x:Key="HighlightDarkYellow">#383a32</Color>
+    <Color x:Key="HighlightGray">#444756</Color>
+    <Color x:Key="ForegroundWhite">#ffffff</Color>
+    <Color x:Key="DisableDark">#6c4f7a</Color>
+
+    <SolidColorBrush x:Key="SuccessGreenBrush" Color="{StaticResource SuccessGreen}" />
+    <SolidColorBrush x:Key="FailRedBrush" Color="{StaticResource FailRed}" />
+    <SolidColorBrush x:Key="ForegroundYellowBrush" Color="{StaticResource ForegroundYellow}" />
+    <SolidColorBrush x:Key="BackgroundDarkBrush" Color="{StaticResource BackgroundDark}" />
+    <SolidColorBrush x:Key="HighlightCyanBrush" Color="{StaticResource HighlightCyan}" />
+    <SolidColorBrush x:Key="HighlightDarkYellowBrush" Color="{StaticResource HighlightDarkYellow}" />
+    <SolidColorBrush x:Key="HighlightGrayBrush" Color="{StaticResource HighlightGray}" />
+    <SolidColorBrush x:Key="ForegroundWhiteBrush" Color="{StaticResource ForegroundWhite}" />
+    <SolidColorBrush x:Key="DisableDarkBrush" Color="{StaticResource DisableDark}" />
+
+</ResourceDictionary>

@@ -34,6 +34,11 @@ namespace CyberPuzzle.Model
         public bool IsEnabled => !IsSelected && IsAvailable;
 
         /// <summary>
+        /// indicates that this piece will be available after clicking the specific piece
+        /// </summary>
+        public bool IsHighlighted { get; set; }
+
+        /// <summary>
         /// the coordinates of the current piece
         /// </summary>
         public (int X, int Y) Position { get; private set; }
