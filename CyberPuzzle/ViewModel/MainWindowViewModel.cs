@@ -17,14 +17,23 @@ namespace CyberPuzzle.ViewModel
              "1C", "55", "7A", "BD", "E9", "FF"
         };
 
+        /// <summary>
+        /// the size of the puzzle
+        /// </summary>
         public int PuzzleSize => (int)Math.Sqrt(Puzzle.Count);
 
+        /// <summary>
+        /// the command when the piece is clicked
+        /// </summary>
         public ICommand PieceClickCommand { get; private set; }
 
         public ObservableCollection<Piece> Puzzle { get; private set; } = new();
 
         public ObservableCollection<string> SelectedWords { get; set; } = new();
 
+        /// <summary>
+        /// the coordinates of the last clicked piece
+        /// </summary>
         [DoNotNotify]
         public (int X, int Y) CurrentPosition { get; set; } = (-1, 0);
 
@@ -73,7 +82,10 @@ namespace CyberPuzzle.ViewModel
                 words = words.Take(wordCount.Value).ToArray();
             else
                 wordCount = Words.Length;
+
             Puzzle.Clear();
+            SelectedWords.Clear();
+
             for (int i = 0; i < size * size; i++)
             {
                 Puzzle.Add(new Piece(words[rnd.Next(wordCount.Value)], (i % size, i / size)));

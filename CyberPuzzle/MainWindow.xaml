@@ -5,27 +5,21 @@
         xmlns:local="clr-namespace:CyberPuzzle"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
-        Title="MainWindow"
-        Width="600"
+        Title="Cyberpuzzle 2077"
+        Width="800"
         Height="450"
+        Background="{StaticResource BackgroundDarkBrush}"
         FontFamily="Consolas"
         mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Border Padding="1" BorderBrush="Gray">
+        <Border Margin="10" Padding="1" BorderBrush="Gray">
             <ItemsControl ItemsSource="{Binding Puzzle}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -39,15 +33,26 @@
                                 CommandParameter="{Binding}"
                                 IsEnabled="{Binding IsEnabled, Mode=OneWay}"
                                 Style="{StaticResource WordButton}">
-                            <TextBlock Text="{Binding Word}" />
+                            <TextBlock Text="{Binding DisplayWord}" />
                         </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Border>
-        <ListBox Grid.Column="1"
-                 HorizontalContentAlignment="Center"
-                 FontSize="24"
-                 ItemsSource="{Binding SelectedWords}" />
+        <ItemsControl Grid.Column="1" Margin="0,10,10,10" ItemsSource="{Binding SelectedWords}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Background="{StaticResource BackgroundDarkBrush}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="15"
+                               FontSize="26"
+                               Foreground="{StaticResource ForegroundWhiteBrush}"
+                               Text="{Binding}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

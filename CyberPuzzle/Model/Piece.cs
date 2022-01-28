@@ -6,26 +6,21 @@ namespace CyberPuzzle.Model
 {
     internal class Piece : ObservableObject
     {
-        private static Brush NormalBrush;
-        private static Brush HighlightBrush;
-        private static Brush DisabledBrush;
+        /// <summary>
+        /// the placeholder when this piece is pressed
+        /// </summary>
+        public const string SelectedEmptyPlaceholder = "[]";
 
-        static Piece()
-        {
-            NormalBrush = App.Current.TryFindResource("ForegroundYellowBrush") as Brush;
-            HighlightBrush = App.Current.TryFindResource("HighlightCyanBrush") as Brush;
-            DisabledBrush = App.Current.TryFindResource("DisableBrush") as Brush;
-        }
+        /// <summary>
+        /// the actual word this piece is holding
+        /// </summary>
+        public string Word { get; set; }
 
-        private string word;
-        public string Word
-        {
-            get
-            {
-                return IsSelected ? "[ ]" : word;
-            }
-            private set => word = value;
-        }
+        /// <summary>
+        /// used to display the word or placeholder in the puzzle panel
+        /// </summary>
+        [DependsOn(nameof(Word))]
+        public string DisplayWord => IsSelected ? SelectedEmptyPlaceholder : Word;
 
         /// <summary>
         /// whether this button has been clicked and therefore cannot be clicked anymore
@@ -47,9 +42,6 @@ namespace CyberPuzzle.Model
         /// according to the rule, whether the current piece can be clicked
         /// </summary>
         public bool IsAvailable { get; set; }
-
-        [DependsOn(nameof(IsSelected))]
-        public Brush Foreground => IsSelected ? DisabledBrush : NormalBrush;
 
         public Piece(string word, (int, int) pos)
         {
