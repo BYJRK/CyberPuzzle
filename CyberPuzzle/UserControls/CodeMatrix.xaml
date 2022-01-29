@@ -9,10 +9,8 @@
              d:DesignHeight="450"
              d:DesignWidth="800"
              d:Background="Gray"
+             Name="userControl"
              mc:Ignorable="d">
-    <d:UserControl.DataContext>
-        <vm:MainWindowViewModel />
-    </d:UserControl.DataContext>
 
     <Border HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
@@ -35,7 +33,7 @@
             <Border Grid.Row="1"
                     Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                     BorderBrush="Gray"
-                    IsEnabled="{Binding IsGameNotFinished}">
+                    IsEnabled="{Binding BufferPanelVM.IsGameNotFinished}">
                 <ItemsControl ItemsSource="{Binding Puzzle}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -47,10 +45,10 @@
                             <Button IsEnabled="{Binding IsEnabled, Mode=OneWay}" Style="{StaticResource WordButton}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceClickCommand}" CommandParameter="{Binding}" />
+                                        <i:InvokeCommandAction Command="{Binding ElementName=userControl,Path=DataContext.PieceClickCommand}" CommandParameter="{Binding}" />
                                     </i:EventTrigger>
                                     <i:EventTrigger EventName="MouseEnter">
-                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PieceMouseEnterCommand}" CommandParameter="{Binding}" />
+                                        <i:InvokeCommandAction Command="{Binding ElementName=userControl, Path=DataContext.PieceMouseEnterCommand}" CommandParameter="{Binding}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                                 <TextBlock Text="{Binding DisplayWord}" />

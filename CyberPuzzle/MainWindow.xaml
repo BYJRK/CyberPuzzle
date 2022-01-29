@@ -23,10 +23,10 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <uc:CodeMatrix Margin="10,10,10,10" DataContext="{Binding}" />
+        <uc:CodeMatrix Margin="10" DataContext="{Binding CodeMatrixVM}" />
 
         <StackPanel Grid.Column="1">
-            <uc:BufferPanel DataContext="{Binding}" />
+            <uc:BufferPanel DataContext="{Binding BufferPanelVM}" />
         </StackPanel>
     </Grid>
 </Window>

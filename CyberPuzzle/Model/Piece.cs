@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace CyberPuzzle.Model
 {
-    internal class Piece : ObservableObject
+    public class Piece : ObservableObject
     {
         /// <summary>
         /// the placeholder when this piece is pressed

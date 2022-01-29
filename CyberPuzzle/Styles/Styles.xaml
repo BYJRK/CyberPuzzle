@@ -57,7 +57,7 @@
                             <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
                         </Trigger>
                         <!-- when game is over, all buttons will be disabled -->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsGameNotFinished}" Value="False">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.BufferPanelVM.IsGameNotFinished}" Value="False">
                             <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
                             <Setter Property="Foreground" Value="{StaticResource DisableDarkBrush}" />
                             <Setter Property="IsEnabled" Value="False" />
@@ -85,7 +85,7 @@
             <Style TargetType="Rectangle">
                 <Setter Property="Stroke" Value="{StaticResource ForegroundYellowBrush}" />
                 <Setter Property="StrokeThickness" Value="1.5" />
-                <Setter Property="StrokeDashOffset" Value="1"/>
+                <Setter Property="StrokeDashOffset" Value="1" />
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding}" Value="{x:Null}">
                         <Setter Property="StrokeDashArray" Value="5,4" />
