@@ -1,31 +1,15 @@
 ﻿using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
 
 namespace CyberPuzzle.ViewModel
 {
     public class BufferPanelViewModel : ObservableObject
     {
-        /// <summary>
-        /// the selected words
-        /// </summary>
-        public ObservableCollection<Piece> SelectedWords { get; set; } = new();
+        public Level GameLevel { get; set; }
 
-        public int Index { get; set; }
-
-        public void Append(Piece piece)
+        public BufferPanelViewModel(Level level)
         {
-            SelectedWords[Index++] = piece;
+            GameLevel = level;
         }
-
-        public void Reset(int count)
-        {
-            SelectedWords.Clear();
-            for (int i = 0; i < count; i++)
-                SelectedWords.Add(null);
-            Index = 0;
-        }
-
-        public bool IsGameNotFinished => Index < SelectedWords.Count;
     }
 }

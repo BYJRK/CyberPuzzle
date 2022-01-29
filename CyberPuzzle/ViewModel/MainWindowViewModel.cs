@@ -13,14 +13,18 @@ namespace CyberPuzzle.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
+        public Level GameLevel { get; set; }
+
         #region Constructor
 
         public MainWindowViewModel()
         {
             RandomHelper.Init(1335);
 
-            BufferPanelVM = new();
-            CodeMatrixVM = new(BufferPanelVM);
+            GameLevel = new Level();
+
+            BufferPanelVM = new(GameLevel);
+            CodeMatrixVM = new(GameLevel);
         }
 
         #endregion

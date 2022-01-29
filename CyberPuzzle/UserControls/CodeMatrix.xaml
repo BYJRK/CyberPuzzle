@@ -33,11 +33,11 @@
             <Border Grid.Row="1"
                     Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
                     BorderBrush="Gray"
-                    IsEnabled="{Binding BufferPanelVM.IsGameNotFinished}">
-                <ItemsControl ItemsSource="{Binding Puzzle}">
+                    IsEnabled="{Binding GameLevel.IsGameNotFinished}">
+                <ItemsControl ItemsSource="{Binding GameLevel.Puzzle}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="{Binding PuzzleSize}" Rows="{Binding PuzzleSize}" />
+                            <UniformGrid Columns="{Binding GameLevel.PuzzleSize}" Rows="{Binding GameLevel.PuzzleSize}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
