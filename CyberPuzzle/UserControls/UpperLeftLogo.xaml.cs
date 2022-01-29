@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CyberPuzzle.UserControls
 {
     /// <summary>
-    /// CodeMatrix.xaml 的交互逻辑
+    /// UpperLeftLogo.xaml 的交互逻辑
     /// </summary>
-    public partial class CodeMatrix : UserControl
+    public partial class UpperLeftLogo : UserControl
     {
-        public CodeMatrix()
+        public UpperLeftLogo()
         {
             InitializeComponent();
         }

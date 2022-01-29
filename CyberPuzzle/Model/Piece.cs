@@ -9,7 +9,7 @@ namespace CyberPuzzle.Model
         /// <summary>
         /// the placeholder when this piece is pressed
         /// </summary>
-        public const string SelectedEmptyPlaceholder = "[]";
+        public const string SelectedEmptyPlaceholder = "[ ]";
 
         /// <summary>
         /// the actual word this piece is holding

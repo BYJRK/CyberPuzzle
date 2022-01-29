@@ -8,7 +8,17 @@ namespace CyberPuzzle.Helpers
 {
     static class RandomHelper
     {
-        public static Random Rnd { get; private set; }
+        private static Random rnd;
+        public static Random Rnd
+        {
+            get
+            {
+                if (rnd == null)
+                    rnd = new Random(0);
+                return rnd;
+            }
+            set => rnd = value;
+        }
 
         /// <summary>
         /// initialize the random generator with a given seed
@@ -48,6 +58,14 @@ namespace CyberPuzzle.Helpers
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        /// <summary>
+        /// randomly select one element inside the list
+        /// </summary>
+        public static T Choice<T>(IEnumerable<T> list)
+        {
+            return list.ElementAt(Rnd.Next(list.Count()));
         }
 
         #endregion

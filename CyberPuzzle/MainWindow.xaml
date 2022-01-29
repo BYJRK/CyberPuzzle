@@ -8,25 +8,61 @@
         xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
         xmlns:uc="clr-namespace:CyberPuzzle.UserControls"
         Title="Cyberpuzzle 2077"
-        Width="960"
-        Height="540"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundDarkBrush}"
-        FontFamily="Consolas"
         ResizeMode="CanMinimize"
         mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="600" />
         </Grid.ColumnDefinitions>
 
-        <uc:CodeMatrix Margin="10" DataContext="{Binding CodeMatrixVM}" />
+        <Border Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Background="{StaticResource HighlightDarkYellowBrush}" />
 
-        <StackPanel Grid.Column="1">
-            <uc:BufferPanel DataContext="{Binding BufferPanelVM}" />
+        <uc:UpperLeftLogo VerticalAlignment="Center" />
+        <uc:BreachTimePanel Grid.Row="1" Width="440" />
+        <uc:CodeMatrixPanel Grid.Row="2"
+                            Margin="20"
+                            DataContext="{Binding CodeMatrixVM}" />
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="0,20,20,20"
+                    Orientation="Vertical">
+            <uc:ObjectivePanel DataContext="{Binding ObjectiveVM}" />
+            <TextBlock Margin="1,8,0,0"
+                       Foreground="{StaticResource ForegroundYellowBrush}"
+                       FontFamily="{StaticResource RajdhaniMedium}"
+                       FontSize="6">
+                <Run>CUSTOM GLITCHES ON UI MAY APPEAR, BASED ON THIS ANALYSIS.</Run>
+                <LineBreak />
+                <Run>DOCUMENT/D/1IIJTZLABKET3JOHXCOQOTCIIHWMIZBZZ7VBTDESD90D</Run>
+                <LineBreak />
+                <Run>TYPE: CYBERSPACE</Run>
+            </TextBlock>
         </StackPanel>
+
+        <TextBlock Grid.Column="1"
+                   Height="28"
+                   Margin="10,10,10,10"
+                   VerticalAlignment="Top"
+                   Text="BUFFER"
+                   Style="{StaticResource Header}" />
+        <uc:BufferPanel Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0,3,0,3"
+                        HorizontalAlignment="Left"
+                        DataContext="{Binding BufferPanelVM}" />
     </Grid>
 </Window>

@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="Rajdhani">pack://application:,,,/Resources/Fonts/#Rajdhani</FontFamily>
+    <FontFamily x:Key="RajdhaniMedium">pack://application:,,,/Resources/Fonts/#Rajdhani Medium</FontFamily>
+    <FontFamily x:Key="RajdhaniLight">pack://application:,,,/Resources/Fonts/#Rajdhani Light</FontFamily>
+
+</ResourceDictionary>

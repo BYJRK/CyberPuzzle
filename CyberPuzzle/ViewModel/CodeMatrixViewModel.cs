@@ -7,6 +7,8 @@ namespace CyberPuzzle.ViewModel
 {
     public class CodeMatrixViewModel : ObservableObject
     {
+        public static CodeMatrixViewModel Demo => new CodeMatrixViewModel(new Level());
+
         public Level GameLevel { get; set; }
 
         public CodeMatrixViewModel(Level level)
@@ -25,13 +27,9 @@ namespace CyberPuzzle.ViewModel
                 UpdateHighlight(piece);
             });
 
-            GameLevel.NewPuzzle(6, 7);
+            GameLevel.NewPuzzle(6, 7, 5);
 
             UpdateAvailability();
-        }
-
-        public CodeMatrixViewModel()
-        {
         }
 
         /// <summary>
@@ -44,6 +42,11 @@ namespace CyberPuzzle.ViewModel
         /// or column will be available in the next turn
         /// </summary>
         public ICommand PieceMouseEnterCommand { get; private set; }
+
+        /// <summary>
+        /// the command when the mouse has left the current piece
+        /// </summary>
+        public ICommand PieceMouseLeaveCommand { get; private set; }
 
         /// <summary>
         /// update the availablility of all pieces according to the current position and direction

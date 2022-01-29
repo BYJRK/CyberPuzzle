@@ -9,9 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Rajdhani-Light.ttf" />
+    <None Remove="Resources\Fonts\Rajdhani-Medium.ttf" />
+    <None Remove="Resources\Fonts\Rajdhani-Regular.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\Rajdhani-Light.ttf">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Rajdhani-Medium.ttf">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Fonts\Rajdhani-Regular.ttf">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

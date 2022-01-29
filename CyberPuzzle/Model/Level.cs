@@ -29,6 +29,8 @@ namespace CyberPuzzle.Model
         /// </summary>
         public bool IsGameNotFinished => Index < SelectedWords.Count;
 
+        public ObservableCollection<string[]> Objectives { get; set; } = new();
+
         /// <summary>
         /// the array saving the pieces and will be showing on the left board
         /// </summary>
@@ -45,43 +47,63 @@ namespace CyberPuzzle.Model
         [DoNotNotify]
         public (int X, int Y) CurrentPosition { get; set; } = (-1, 0);
 
+        public (int X, int Y) CurrentCursorPosition { get; set; }
+
         /// <summary>
         /// the current direction, where true stands for horizontal
         /// </summary>
         [DoNotNotify]
         public bool Direction { get; set; } = true;
 
+        #region Private Methods
+
         /// <summary>
         /// generate a random puzzle with given side length
         /// </summary>
-        /// <param name="size"></param>
+        /// <param name="boardSize"></param>
         /// <param name="seed"></param>
         /// <param name="wordCount"></param>
-        private void GenerateRandomPuzzle(int size, int? wordCount = null)
+        private void GenerateRandomPuzzle(int boardSize, string[] possibleWords)
         {
-            var count = wordCount ?? Words.Length;
-            var words = RandomHelper.Sample(Words, count).ToArray();
-
-            for (int i = 0; i < size * size; i++)
+            Puzzle.Clear();
+            for (int i = 0; i < boardSize * boardSize; i++)
             {
-                Puzzle.Add(new Piece(words[RandomHelper.Rnd.Next(count)], (i % size, i / size)));
+                Puzzle.Add(new Piece(RandomHelper.Choice(possibleWords), (i % boardSize, i / boardSize)));
             }
         }
 
         /// <summary>
+        /// generate random quizes
+        /// </summary>
+        /// <param name="possibleWords"></param>
+        /// <param name="quizSizes"></param>
+        private void GenerateRandomObjectives(string[] possibleWords, int[] quizSizes)
+        {
+            Objectives.Clear();
+            foreach (var size in quizSizes)
+            {
+                Objectives.Add(Enumerable.Range(0, size).Select(_ => RandomHelper.Choice(possibleWords)).ToArray());
+            }
+        }
+
+        #endregion
+
+        /// <summary>
         /// start a new game
         /// </summary>
-        public void NewPuzzle(int size, int maxLength)
+        public void NewPuzzle(int boardSize, int maxLength, int numOfPossibleWords)
         {
-            if (size != 5 && size != 6)
+            if (boardSize != 5 && boardSize != 6)
                 throw new NotImplementedException("size other than 5 or 6 is not supported.");
 
-            Reset(maxLength);
+            ResetSelectedWords(maxLength);
 
-            Puzzle.Clear();
             Direction = true;
             CurrentPosition = (-1, 0);
-            GenerateRandomPuzzle(size, size - 1);
+
+            var possibleWords = RandomHelper.Sample(Words, numOfPossibleWords).ToArray();
+            GenerateRandomPuzzle(boardSize, possibleWords);
+            GenerateRandomObjectives(possibleWords, new[] { 3, 4, 5 });
         }
 
         /// <summary>
@@ -93,12 +115,19 @@ namespace CyberPuzzle.Model
             SelectedWords[Index++] = piece;
         }
 
-        public void Reset(int count)
+        public void ResetSelectedWords(int count)
         {
             SelectedWords.Clear();
             for (int i = 0; i < count; i++)
                 SelectedWords.Add(null);
             Index = 0;
         }
+
+        public Piece this[int index]
+        {
+            get { return Puzzle[index]; }
+        }
+
+        public Piece this[int x, int y] { get { return Puzzle[y * PuzzleSize + x]; } }
     }
 }

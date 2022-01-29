@@ -5,20 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CyberPuzzle.UserControls"
              xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
-             d:DesignHeight="450"
-             d:Background="Gray"
-             d:DesignWidth="800"
+             d:DesignHeight="81.853"
+             Background="{StaticResource BackgroundDarkBrush}"
+             d:DesignWidth="417.243"
+             d:DataContext="{x:Static vm:BufferPanelViewModel.Demo}"
              mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Grid.Column="1"
-                   Height="28"
-                   Margin="10,20,10,10"
-                   VerticalAlignment="Top"
-                   Style="{StaticResource Header}">
-            BUFFER
-        </TextBlock>
-        <Border Margin="10,10,10,0"
-                Padding="10"
+        <Border Padding="10"
                 HorizontalAlignment="Left"
                 BorderBrush="{StaticResource ForegroundYellowBrush}"
                 BorderThickness="{StaticResource PieceBorderThickness}">
@@ -38,7 +31,7 @@
                         <Border Style="{StaticResource WordBox}">
                             <Grid>
                                 <Rectangle />
-                                <TextBlock d:Text="FF" />
+                                <TextBlock />
                             </Grid>
                         </Border>
                     </DataTemplate>
