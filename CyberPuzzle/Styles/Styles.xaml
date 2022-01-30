@@ -181,7 +181,6 @@
     <Style x:Key="ObjectiveCover" TargetType="Grid">
         <Setter Property="Height" Value="48" />
         <Setter Property="Margin" Value="1" />
-        <!--<Setter Property="Visibility" Value="Hidden"/>-->
         <Style.Resources>
             <Storyboard x:Key="slideIn">
                 <DoubleAnimation Storyboard.TargetProperty="Height"

@@ -96,7 +96,12 @@
                             <DataTemplate>
                                 <Grid Style="{StaticResource ObjectiveCover}">
                                     <Border>
-                                        <TextBlock />
+                                        <Grid>
+                                            <TextBlock />
+                                            <TextBlock HorizontalAlignment="Right"
+                                                       Visibility="{Binding ScoreVisibility}"
+                                                       Text="{Binding Score, StringFormat=Score: {0}}" />
+                                        </Grid>
                                     </Border>
                                 </Grid>
                             </DataTemplate>

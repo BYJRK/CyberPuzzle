@@ -3,6 +3,7 @@ using PropertyChanged;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace CyberPuzzle.Model
 {
@@ -36,6 +37,16 @@ namespace CyberPuzzle.Model
         /// the text showing on the cover of this row
         /// </summary>
         public string CoverText => CannotFinish ? "FAILED" : "INSTALLED";
+
+        /// <summary>
+        /// the score of this quiz
+        /// </summary>
+        public int Score => Row.Count * 100;
+
+        /// <summary>
+        /// whether the score is shown
+        /// </summary>
+        public Visibility ScoreVisibility => IsFinished ? Visibility.Visible : Visibility.Hidden;
 
         /// <summary>
         /// a collection of words in this quiz

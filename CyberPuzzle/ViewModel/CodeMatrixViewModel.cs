@@ -96,23 +96,24 @@ namespace CyberPuzzle.ViewModel
             int FindMaxOverlayLength(string[] arr1, string[] arr2)
             {
                 int idx = 0;
-                int len = 0;
                 for (int i = 0; i < arr1.Length; i++)
                 {
-                    if (idx == arr2.Length)
-                        return arr2.Length;
                     if (arr1[i] == arr2[idx])
                     {
-                        len++;
                         idx++;
+                        if (idx == arr2.Length)
+                            return idx;
+                    }
+                    else if (arr1[i] == arr2[0])
+                    {
+                        idx = 1;
                     }
                     else
                     {
-                        len = 0;
                         idx = 0;
                     }
                 }
-                return len;
+                return idx;
             }
 
             var current = GameLevel.SelectedWords.Where(p => p != null).Select(p => p.Word).ToArray();
@@ -129,13 +130,13 @@ namespace CyberPuzzle.ViewModel
                 var overlayLength = FindMaxOverlayLength(current, sequence);
                 for (int i = 0; i < obj.Row.Count; i++)
                 {
-                    obj.Row[i].IsFinished = i < overlayLength;
+                    obj[i].IsFinished = i < overlayLength;
                 }
 
                 if (overlayLength == sequence.Length)
                     obj.IsFinished = true;
 
-                if (obj.UnfinishedWordLength > GameLevel.SelectedWords.Count - GameLevel.Index)
+                else if (obj.UnfinishedWordLength > GameLevel.SelectedWords.Count - GameLevel.Index)
                     obj.CannotFinish = true;
             }
 
