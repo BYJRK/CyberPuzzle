@@ -1,6 +1,8 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+using PropertyChanged;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace CyberPuzzle.Model
 {
@@ -18,9 +20,29 @@ namespace CyberPuzzle.Model
             }
         }
 
+        #region Exposed Properties for Binding
+
+        /// <summary>
+        /// whether the current quiz is finished
+        /// </summary>
         public bool IsFinished { get; set; }
 
+        /// <summary>
+        /// the current quiz cannot be finished due to a lack of remaining steps
+        /// </summary>
+        public bool CannotFinish { get; set; }
+
+        /// <summary>
+        /// the text showing on the cover of this row
+        /// </summary>
+        public string CoverText => CannotFinish ? "FAILED" : "INSTALLED";
+
+        /// <summary>
+        /// a collection of words in this quiz
+        /// </summary>
         public ObservableCollection<QuizPiece> Row { get; set; }
+
+        #endregion
 
         public Objective(IEnumerable<string> words)
         {
@@ -30,5 +52,17 @@ namespace CyberPuzzle.Model
                 Row.Add(new QuizPiece(word));
             }
         }
+
+        public QuizPiece this[int index] => Row[index];
+
+        [DoNotNotify]
+        public int WordLength => Row.Count;
+
+        [DoNotNotify]
+        public int FinishedWordLength => Row.TakeWhile(p => p.IsFinished).Count();
+
+        [DoNotNotify]
+        public int UnfinishedWordLength => WordLength - FinishedWordLength;
+
     }
 }

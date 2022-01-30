@@ -96,7 +96,7 @@
                             <DataTemplate>
                                 <Grid Style="{StaticResource ObjectiveCover}">
                                     <Border>
-                                        <TextBlock Text="Installed" />
+                                        <TextBlock />
                                     </Border>
                                 </Grid>
                             </DataTemplate>

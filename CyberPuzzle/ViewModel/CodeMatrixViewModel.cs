@@ -88,26 +88,68 @@ namespace CyberPuzzle.ViewModel
             }
         }
 
+        /// <summary>
+        /// update the objectives' IsFinished status
+        /// </summary>
         private void UpdateFinishStatus()
         {
+            int FindMaxOverlayLength(string[] arr1, string[] arr2)
+            {
+                int idx = 0;
+                int len = 0;
+                for (int i = 0; i < arr1.Length; i++)
+                {
+                    if (idx == arr2.Length)
+                        return len;
+                    if (arr1[i] == arr2[idx])
+                    {
+                        len++;
+                        idx++;
+                    }
+                    else
+                    {
+                        len = 0;
+                        idx = 0;
+                    }
+                }
+                return len;
+            }
+
             var current = GameLevel.SelectedWords.Where(p => p != null).Select(p => p.Word).ToArray();
             foreach (var obj in GameLevel.Objectives)
             {
-                // skip if this row has already been finished 
+                // skip if this row has already been marked as finished or cannot finish
+                if (obj.CannotFinish)
+                    continue;
                 if (obj.IsFinished)
                     continue;
 
+                // update isfinished property of each piece
                 var sequence = obj.Row.Select(p => p.Word).ToArray();
                 var length = FindMaxOverlayLength(current, sequence);
                 for (int i = 0; i < obj.Row.Count; i++)
                 {
                     obj.Row[i].IsFinished = i < length;
                 }
+
                 if (length == sequence.Length)
                     obj.IsFinished = true;
+
+                if (obj.UnfinishedWordLength > GameLevel.SelectedWords.Count - GameLevel.Index)
+                    obj.CannotFinish = true;
+            }
+
+            // decide whether the game is over
+            if (GameLevel.Objectives.Where(obj => obj.IsFinished || obj.CannotFinish).Count() == GameLevel.Objectives.Count)
+            {
+                GameLevel.Index = GameLevel.SelectedWords.Count;
             }
         }
 
+        /// <summary>
+        /// update the objectives' current highlighted words according to selected words
+        /// </summary>
+        /// <param name="piece"></param>
         private void UpdateHighlightObjective(Piece piece)
         {
             foreach (var obj in GameLevel.Objectives)
@@ -117,28 +159,6 @@ namespace CyberPuzzle.ViewModel
                     p.IsHighlighted = piece != null && piece.Word == p.Word;
                 }
             }
-        }
-
-        private int FindMaxOverlayLength(string[] arr1, string[] arr2)
-        {
-            int idx = 0;
-            int len = 0;
-            for (int i = 0; i < arr1.Length; i++)
-            {
-                if (idx == arr2.Length)
-                    return len;
-                if (arr1[i] == arr2[idx])
-                {
-                    len++;
-                    idx++;
-                }
-                else
-                {
-                    len = 0;
-                    idx = 0;
-                }
-            }
-            return len;
         }
     }
 }

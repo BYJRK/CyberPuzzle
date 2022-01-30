@@ -68,6 +68,9 @@ namespace CyberPuzzle.Helpers
             return list.ElementAt(Rnd.Next(list.Count()));
         }
 
+        public static int NextInteger(int maxValue) => Rnd.Next(maxValue);
+        public static int NextInteger(int minValue, int maxValue) => Rnd.Next(minValue, maxValue + 1);
+
         #endregion
     }
 }

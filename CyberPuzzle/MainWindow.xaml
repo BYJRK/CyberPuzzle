@@ -75,11 +75,15 @@
                 <Style TargetType="Button" BasedOn="{StaticResource UIButton}">
                     <Setter Property="Command" Value="{Binding NewGameCommand}" />
                     <Setter Property="CommandParameter" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
+                    <Setter Property="Margin" Value="0,0,20,0" />
                 </Style>
             </StackPanel.Resources>
             <Button Content="EASY" />
-            <Button Margin="20,0" Content="MEDIUM" />
+            <Button Content="MEDIUM" />
             <Button Content="HARD" />
+            <Button Margin="0"
+                    Command="{Binding QuitGameCommand}"
+                    Content="QUIT" />
         </StackPanel>
     </Grid>
 </Window>

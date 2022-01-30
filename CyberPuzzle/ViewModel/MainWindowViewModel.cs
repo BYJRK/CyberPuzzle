@@ -2,6 +2,7 @@
 using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CyberPuzzle.ViewModel
@@ -37,6 +38,7 @@ namespace CyberPuzzle.ViewModel
                 }
                 CodeMatrixVM.UpdateAvailability();
             });
+            QuitGameCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
         }
 
         #endregion
@@ -47,7 +49,15 @@ namespace CyberPuzzle.ViewModel
         public CodeMatrixViewModel CodeMatrixVM { get; private set; }
         public ObjectivePanelViewModel ObjectiveVM { get; set; }
 
+        /// <summary>
+        /// the command to start a new game, given the difficulty
+        /// </summary>
         public ICommand NewGameCommand { get; set; }
+
+        /// <summary>
+        /// the command to quit the application
+        /// </summary>
+        public ICommand QuitGameCommand { get; set; }
 
         #endregion
 

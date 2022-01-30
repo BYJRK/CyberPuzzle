@@ -14,6 +14,8 @@ namespace CyberPuzzle.Model
         /// </summary>
         public static readonly string[] Words = new[] { "1C", "55", "7A", "BD", "E9", "FF" };
 
+        #region Exposed Properties for Binding
+
         /// <summary>
         /// the selected words
         /// </summary>
@@ -40,6 +42,8 @@ namespace CyberPuzzle.Model
         /// the size of the puzzle
         /// </summary>
         public int PuzzleSize { get; set; }
+
+        #endregion
 
         /// <summary>
         /// the coordinates of the last clicked piece
@@ -112,6 +116,35 @@ namespace CyberPuzzle.Model
         }
 
         /// <summary>
+        /// quickly start a new game with given difficulty
+        /// </summary>
+        /// <param name="level">the value ranges from 1 to 6</param>
+        public void NewPuzzle(int level)
+        {
+            switch (level)
+            {
+                case 1:
+                    NewPuzzle(5, 4, 4, new[] { 2, 3 });
+                    break;
+                case 2:
+                    NewPuzzle(5, 5, 4, new[] { 2, 3, 3 });
+                    break;
+                case 3:
+                    NewPuzzle(6, 6, 5, new[] { 3, 3 });
+                    break;
+                case 4:
+                    NewPuzzle(6, 7, 5, new[] { 2, 3, 4 });
+                    break;
+                case 5:
+                    NewPuzzle(7, 8, 5, new[] { 3, 4, 4 });
+                    break;
+                case 6:
+                    NewPuzzle(7, 8, 5, new[] { 3, 4, 5 });
+                    break;
+            }
+        }
+
+        /// <summary>
         /// append a new word into the <see cref="SelectedWords"/>
         /// </summary>
         /// <param name="piece"></param>
@@ -120,7 +153,10 @@ namespace CyberPuzzle.Model
             SelectedWords[Index++] = piece;
         }
 
-        public void ResetSelectedWords(int count)
+        /// <summary>
+        /// all the procedures to reset the selected words (but add empty elements) and the corresponding indices
+        /// </summary>
+        private void ResetSelectedWords(int count)
         {
             SelectedWords.Clear();
             for (int i = 0; i < count; i++)
@@ -128,11 +164,15 @@ namespace CyberPuzzle.Model
             Index = 0;
         }
 
+        #region Indexers
+
         public Piece this[int index]
         {
             get { return Puzzle[index]; }
         }
 
         public Piece this[int x, int y] { get { return Puzzle[y * PuzzleSize + x]; } }
+
+        #endregion
     }
 }
