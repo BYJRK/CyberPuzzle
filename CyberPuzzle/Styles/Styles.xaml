@@ -220,10 +220,10 @@
         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
-        <Setter Property="Padding" Value="5,5" />
+        <Setter Property="Padding" Value="5,3" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Width" Value="90" />
-        <Setter Property="FontSize" Value="{StaticResource WordBoxFontSize}" />
+        <Setter Property="FontSize" Value="{StaticResource HeaderFontSize}" />
         <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
         <Setter Property="Template">
             <Setter.Value>

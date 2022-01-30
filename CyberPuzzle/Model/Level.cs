@@ -1,4 +1,5 @@
 ﻿using CyberPuzzle.Helpers;
+using CyberPuzzle.ViewModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using PropertyChanged;
 using System;
@@ -59,6 +60,8 @@ namespace CyberPuzzle.Model
         /// </summary>
         [DoNotNotify]
         public bool Direction { get; set; } = true;
+
+        public MainWindowViewModel mainVM { get; set; }
 
         #region Private Methods
 
@@ -151,6 +154,15 @@ namespace CyberPuzzle.Model
         public void Append(Piece piece)
         {
             SelectedWords[Index++] = piece;
+        }
+
+        /// <summary>
+        /// force end the current game
+        /// </summary>
+        public void ForceGameOver()
+        {
+            Index = SelectedWords.Count;
+            mainVM.BreachTimeVM.StopTimer();
         }
 
         /// <summary>

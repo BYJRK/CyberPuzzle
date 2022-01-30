@@ -12,7 +12,7 @@ namespace CyberPuzzle
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            RandomHelper.Init(1335);
+            RandomHelper.Init();
 
             var wnd = new MainWindow();
             wnd.Show();

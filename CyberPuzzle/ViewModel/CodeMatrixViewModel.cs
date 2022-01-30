@@ -100,7 +100,7 @@ namespace CyberPuzzle.ViewModel
                 for (int i = 0; i < arr1.Length; i++)
                 {
                     if (idx == arr2.Length)
-                        return len;
+                        return arr2.Length;
                     if (arr1[i] == arr2[idx])
                     {
                         len++;
@@ -126,13 +126,13 @@ namespace CyberPuzzle.ViewModel
 
                 // update isfinished property of each piece
                 var sequence = obj.Row.Select(p => p.Word).ToArray();
-                var length = FindMaxOverlayLength(current, sequence);
+                var overlayLength = FindMaxOverlayLength(current, sequence);
                 for (int i = 0; i < obj.Row.Count; i++)
                 {
-                    obj.Row[i].IsFinished = i < length;
+                    obj.Row[i].IsFinished = i < overlayLength;
                 }
 
-                if (length == sequence.Length)
+                if (overlayLength == sequence.Length)
                     obj.IsFinished = true;
 
                 if (obj.UnfinishedWordLength > GameLevel.SelectedWords.Count - GameLevel.Index)
@@ -142,7 +142,7 @@ namespace CyberPuzzle.ViewModel
             // decide whether the game is over
             if (GameLevel.Objectives.Where(obj => obj.IsFinished || obj.CannotFinish).Count() == GameLevel.Objectives.Count)
             {
-                GameLevel.Index = GameLevel.SelectedWords.Count;
+                GameLevel.ForceGameOver();
             }
         }
 

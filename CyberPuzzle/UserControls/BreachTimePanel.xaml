@@ -26,12 +26,16 @@
                  Height="40"
                  HorizontalAlignment="Right"
                  IsReadOnly="True"
+                 HorizontalContentAlignment="Left"
+                 Padding="19,0"
                  IsHitTestVisible="False"
-                 Text="40.24"
+                 d:Text="40.24"
+                 Text="{Binding RemainingTime,StringFormat=F2}"
                  Style="{StaticResource DataBox}" />
         <ProgressBar Grid.Row="1"
                      Grid.ColumnSpan="2"
-                     Value="67"
+                     d:Value="67"
+                     Value="{Binding Percent,Mode=OneWay}"
                      Margin="0,0,0,10"
                      Style="{StaticResource ProgressBar}" />
     </Grid>

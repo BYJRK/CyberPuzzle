@@ -15,30 +15,36 @@ namespace CyberPuzzle.ViewModel
 
         public MainWindowViewModel()
         {
-            GameLevel = new Level();
-            GameLevel.NewPuzzle(5, 5, 4);
+            GameLevel = new Level { mainVM = this };
+            GameLevel.NewPuzzle(2);
 
             BufferPanelVM = new(GameLevel);
             CodeMatrixVM = new(GameLevel);
             ObjectiveVM = new(GameLevel);
+            BreachTimeVM = new(GameLevel);
 
             NewGameCommand = new RelayCommand<string>(cnt =>
             {
                 switch (cnt)
                 {
                     case "EASY":
-                        GameLevel.NewPuzzle(5, 6, 4, new[] { 2, 3 });
+                        GameLevel.NewPuzzle(RandomHelper.NextInteger(1, 2));
+                        BreachTimeVM.StartTimer(30);
                         break;
                     case "MEDIUM":
-                        GameLevel.NewPuzzle(6, 7, 5, new[] { 3, 4, 4 });
+                        GameLevel.NewPuzzle(RandomHelper.NextInteger(3, 4));
+                        BreachTimeVM.StartTimer(45);
                         break;
                     case "HARD":
-                        GameLevel.NewPuzzle(7, 8, 5, new[] { 3, 4, 5 });
+                        GameLevel.NewPuzzle(RandomHelper.NextInteger(5, 6));
+                        BreachTimeVM.StartTimer(60);
                         break;
                 }
                 CodeMatrixVM.UpdateAvailability();
             });
             QuitGameCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
+
+            BreachTimeVM.StartTimer(30);
         }
 
         #endregion
@@ -48,6 +54,7 @@ namespace CyberPuzzle.ViewModel
         public BufferPanelViewModel BufferPanelVM { get; private set; }
         public CodeMatrixViewModel CodeMatrixVM { get; private set; }
         public ObjectivePanelViewModel ObjectiveVM { get; set; }
+        public BreachTimeViewModel BreachTimeVM { get; set; }
 
         /// <summary>
         /// the command to start a new game, given the difficulty

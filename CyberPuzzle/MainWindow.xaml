@@ -32,7 +32,9 @@
                 Background="{StaticResource HighlightDarkYellowBrush}" />
 
         <uc:UpperLeftLogo VerticalAlignment="Center" />
-        <uc:BreachTimePanel Grid.Row="1" Width="440" />
+        <uc:BreachTimePanel Grid.Row="1"
+                            Width="440"
+                            DataContext="{Binding BreachTimeVM}" />
         <uc:CodeMatrixPanel Grid.Row="2"
                             Margin="20"
                             DataContext="{Binding CodeMatrixVM}" />
