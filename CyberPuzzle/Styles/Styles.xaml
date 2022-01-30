@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
         <Setter Property="BorderBrush" Value="{StaticResource HighlightCyanBrush}" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
+        <Setter Property="FontFamily" Value="{StaticResource RajdhaniSemiBold}" />
         <Setter Property="FontSize" Value="{StaticResource WordPieceFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="Height" Value="{StaticResource PieceWidth}" />
@@ -25,7 +25,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="true">
-                        <Border Margin="2"
+                        <Border x:Name="innerBorder"
+                                Margin="2"
                                 Padding="1"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
@@ -57,6 +58,11 @@
                             <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
                             <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
                         </Trigger>
+                        <!-- make the current piece pop when it is hinted -->
+                        <DataTrigger Binding="{Binding IsHinted}" Value="True">
+                            <Setter TargetName="innerBorder" Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
+                            <Setter TargetName="innerBorder" Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
+                        </DataTrigger>
                         <!-- when game is over, all buttons will be disabled -->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=DataContext.GameLevel.IsGameNotFinished}" Value="False">
                             <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
@@ -101,7 +107,7 @@
         <Setter Property="FontSize" Value="{StaticResource HeaderFontSize}" />
         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
+        <Setter Property="FontFamily" Value="{StaticResource RajdhaniSemiBold}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,10" />
     </Style>
@@ -114,7 +120,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="3" />
-        <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}"/>
+        <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
         <Setter Property="FontSize" Value="{StaticResource HeaderFontSize}" />
         <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
         <Setter Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
@@ -129,18 +135,99 @@
     </Style>
 
     <Style x:Key="ObjectiveWord" TargetType="Border">
-        <Setter Property="TextElement.FontFamily" Value="{StaticResource RajdhaniMedium}"/>
-        <Setter Property="TextElement.FontSize" Value="{StaticResource WordBoxFontSize}"/>
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="Width" Value="{StaticResource WordBoxWidth}"/>
-        <Setter Property="Height" Value="{StaticResource WordBoxWidth}"/>
+        <Setter Property="TextElement.FontFamily" Value="{StaticResource RajdhaniMedium}" />
+        <Setter Property="TextElement.FontSize" Value="{StaticResource WordBoxFontSize}" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Width" Value="{StaticResource WordBoxWidth}" />
+        <Setter Property="Height" Value="{StaticResource WordBoxWidth}" />
         <Style.Resources>
             <Style TargetType="TextBlock">
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Foreground" Value="{StaticResource ForegroundWhiteBrush}"/>
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="{StaticResource ForegroundWhiteBrush}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFinished}" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
         </Style.Resources>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
+                <Setter Property="BorderBrush" Value="{StaticResource HighlightCyanBrush}" />
+                <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}" />
+                <Setter Property="TextElement.Foreground" Value="{StaticResource HighlightCyanBrush}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0"
+                                          BlurRadius="20"
+                                          Color="{StaticResource HighlightCyan}" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="ObjectiveCover" TargetType="Grid">
+        <Setter Property="Height" Value="48" />
+        <Setter Property="Margin" Value="1" />
+        <!--<Setter Property="Visibility" Value="Hidden"/>-->
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="Visibility" Value="Hidden" />
+                <Setter Property="Background" Value="{StaticResource SuccessGreenBrush}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFinished}" Value="True">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Height"
+                                                     From="0"
+                                                     To="48"
+                                                     Duration="0:0:0.25" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="5,10" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
+                <Setter Property="Foreground" Value="{StaticResource BackgroundDarkBrush}" />
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="UIButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource ForegroundYellowBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
+        <Setter Property="Padding" Value="10,5" />
+        <Setter Property="FontSize" Value="{StaticResource WordBoxFontSize}" />
+        <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource HighlightCyanBrush}" />
+                <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

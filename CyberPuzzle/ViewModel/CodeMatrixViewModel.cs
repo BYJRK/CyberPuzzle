@@ -1,6 +1,7 @@
 ﻿using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CyberPuzzle.ViewModel
@@ -21,13 +22,17 @@ namespace CyberPuzzle.ViewModel
                 GameLevel.CurrentPosition = piece.Position;
                 GameLevel.Direction = !GameLevel.Direction;
                 UpdateAvailability();
+                UpdateFinishStatus();
             });
             PieceMouseEnterCommand = new RelayCommand<Piece>(piece =>
             {
                 UpdateHighlight(piece);
+                UpdateHighlightObjective(piece);
             });
-
-            GameLevel.NewPuzzle(6, 7, 5);
+            PieceMouseLeaveCommand = new RelayCommand<Piece>(piece =>
+            {
+                UpdateHighlightObjective(null);
+            });
 
             UpdateAvailability();
         }
@@ -51,7 +56,7 @@ namespace CyberPuzzle.ViewModel
         /// <summary>
         /// update the availablility of all pieces according to the current position and direction
         /// </summary>
-        private void UpdateAvailability()
+        public void UpdateAvailability()
         {
             foreach (var p in GameLevel.Puzzle)
             {
@@ -81,6 +86,59 @@ namespace CyberPuzzle.ViewModel
                 else
                     p.IsHighlighted = false;
             }
+        }
+
+        private void UpdateFinishStatus()
+        {
+            var current = GameLevel.SelectedWords.Where(p => p != null).Select(p => p.Word).ToArray();
+            foreach (var obj in GameLevel.Objectives)
+            {
+                // skip if this row has already been finished 
+                if (obj.IsFinished)
+                    continue;
+
+                var sequence = obj.Row.Select(p => p.Word).ToArray();
+                var length = FindMaxOverlayLength(current, sequence);
+                for (int i = 0; i < obj.Row.Count; i++)
+                {
+                    obj.Row[i].IsFinished = i < length;
+                }
+                if (length == sequence.Length)
+                    obj.IsFinished = true;
+            }
+        }
+
+        private void UpdateHighlightObjective(Piece piece)
+        {
+            foreach (var obj in GameLevel.Objectives)
+            {
+                foreach (var p in obj.Row)
+                {
+                    p.IsHighlighted = piece != null && piece.Word == p.Word;
+                }
+            }
+        }
+
+        private int FindMaxOverlayLength(string[] arr1, string[] arr2)
+        {
+            int idx = 0;
+            int len = 0;
+            for (int i = 0; i < arr1.Length; i++)
+            {
+                if (idx == arr2.Length)
+                    return len;
+                if (arr1[i] == arr2[idx])
+                {
+                    len++;
+                    idx++;
+                }
+                else
+                {
+                    len = 0;
+                    idx = 0;
+                }
+            }
+            return len;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace CyberPuzzle.Model
         /// </summary>
         public bool IsGameNotFinished => Index < SelectedWords.Count;
 
-        public ObservableCollection<string[]> Objectives { get; set; } = new();
+        public ObservableCollection<Objective> Objectives { get; set; } = new();
 
         /// <summary>
         /// the array saving the pieces and will be showing on the left board
@@ -39,7 +39,7 @@ namespace CyberPuzzle.Model
         /// <summary>
         /// the size of the puzzle
         /// </summary>
-        public int PuzzleSize => (int)Math.Sqrt(Puzzle.Count);
+        public int PuzzleSize { get; set; }
 
         /// <summary>
         /// the coordinates of the last clicked piece
@@ -47,6 +47,7 @@ namespace CyberPuzzle.Model
         [DoNotNotify]
         public (int X, int Y) CurrentPosition { get; set; } = (-1, 0);
 
+        [DoNotNotify]
         public (int X, int Y) CurrentCursorPosition { get; set; }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace CyberPuzzle.Model
             Objectives.Clear();
             foreach (var size in quizSizes)
             {
-                Objectives.Add(Enumerable.Range(0, size).Select(_ => RandomHelper.Choice(possibleWords)).ToArray());
+                Objectives.Add(new Objective(Enumerable.Range(0, size).Select(_ => RandomHelper.Choice(possibleWords))));
             }
         }
 
@@ -91,19 +92,23 @@ namespace CyberPuzzle.Model
         /// <summary>
         /// start a new game
         /// </summary>
-        public void NewPuzzle(int boardSize, int maxLength, int numOfPossibleWords)
+        public void NewPuzzle(int boardSize, int maxLength, int numOfPossibleWords, int[] objectiveSizes = null)
         {
-            if (boardSize != 5 && boardSize != 6)
+            if (boardSize != 5 && boardSize != 6 && boardSize != 7)
                 throw new NotImplementedException("size other than 5 or 6 is not supported.");
 
             ResetSelectedWords(maxLength);
 
+            PuzzleSize = boardSize;
             Direction = true;
             CurrentPosition = (-1, 0);
 
+            if (objectiveSizes == null)
+                objectiveSizes = new[] { 3, 4, 5 };
+
             var possibleWords = RandomHelper.Sample(Words, numOfPossibleWords).ToArray();
             GenerateRandomPuzzle(boardSize, possibleWords);
-            GenerateRandomObjectives(possibleWords, new[] { 3, 4, 5 });
+            GenerateRandomObjectives(possibleWords, objectiveSizes);
         }
 
         /// <summary>

@@ -64,5 +64,22 @@
                         Margin="0,3,0,3"
                         HorizontalAlignment="Left"
                         DataContext="{Binding BufferPanelVM}" />
+
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="20"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource UIButton}">
+                    <Setter Property="Command" Value="{Binding NewGameCommand}" />
+                    <Setter Property="CommandParameter" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="EASY" />
+            <Button Margin="20,0" Content="MEDIUM" />
+            <Button Content="HARD" />
+        </StackPanel>
     </Grid>
 </Window>

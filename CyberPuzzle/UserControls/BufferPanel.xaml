@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CyberPuzzle.UserControls"
              xmlns:vm="clr-namespace:CyberPuzzle.ViewModel"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="81.853"
-             Background="{StaticResource BackgroundDarkBrush}"
              d:DesignWidth="417.243"
              d:DataContext="{x:Static vm:BufferPanelViewModel.Demo}"
+             Background="{StaticResource BackgroundDarkBrush}"
              mc:Ignorable="d">
     <StackPanel>
         <Border Padding="10"

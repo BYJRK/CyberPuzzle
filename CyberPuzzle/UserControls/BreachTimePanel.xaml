@@ -31,7 +31,7 @@
                  Style="{StaticResource DataBox}" />
         <ProgressBar Grid.Row="1"
                      Grid.ColumnSpan="2"
-                     Value="25"
+                     Value="67"
                      Margin="0,0,0,10"
                      Style="{StaticResource ProgressBar}" />
     </Grid>

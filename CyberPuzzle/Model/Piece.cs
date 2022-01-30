@@ -1,6 +1,5 @@
 ﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
 using PropertyChanged;
-using System.Windows.Media;
 
 namespace CyberPuzzle.Model
 {
@@ -37,6 +36,11 @@ namespace CyberPuzzle.Model
         /// indicates that this piece will be available after clicking the specific piece
         /// </summary>
         public bool IsHighlighted { get; set; }
+
+        /// <summary>
+        /// popup when the word is the same as the mouse is on
+        /// </summary>
+        public bool IsHinted { get; set; }
 
         /// <summary>
         /// the coordinates of the current piece

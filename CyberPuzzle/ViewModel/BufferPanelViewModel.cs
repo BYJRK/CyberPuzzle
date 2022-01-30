@@ -1,5 +1,9 @@
 ﻿using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace CyberPuzzle.ViewModel
 {
