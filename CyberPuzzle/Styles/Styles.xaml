@@ -52,11 +52,17 @@
                         <!-- if the button has been selected and is no longer available -->
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <Setter Property="Foreground" Value="{StaticResource DisableDarkBrush}" />
+                            <DataTrigger.EnterActions>
+                                <SoundPlayerAction Source="/Resources/SFX/click.wav" />
+                            </DataTrigger.EnterActions>
                         </DataTrigger>
                         <!-- make the current piece pop if the mouse is over -->
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderThickness" Value="{StaticResource PieceBorderThickness}" />
                             <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
+                            <Trigger.EnterActions>
+                                <SoundPlayerAction Source="/Resources/SFX/mouseover.wav" />
+                            </Trigger.EnterActions>
                         </Trigger>
                         <!-- make the current piece pop when it is hinted -->
                         <DataTrigger Binding="{Binding IsHinted}" Value="True">
@@ -149,6 +155,9 @@
                     <DataTrigger Binding="{Binding IsFinished}" Value="True">
                         <Setter Property="Foreground" Value="{StaticResource ForegroundYellowBrush}" />
                     </DataTrigger>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <SoundPlayerAction Source="/Resources/SFX/mouseover.wav" />
+                    </EventTrigger>
                 </Style.Triggers>
             </Style>
         </Style.Resources>
@@ -189,6 +198,7 @@
                         <Setter Property="Visibility" Value="Visible" />
                         <DataTrigger.EnterActions>
                             <BeginStoryboard Storyboard="{StaticResource slideIn}" />
+                            <SoundPlayerAction Source="/Resources/SFX/installed.wav" />
                         </DataTrigger.EnterActions>
                     </DataTrigger>
                     <DataTrigger Binding="{Binding CannotFinish}" Value="True">
@@ -196,6 +206,7 @@
                         <Setter Property="Background" Value="{StaticResource FailRedBrush}" />
                         <DataTrigger.EnterActions>
                             <BeginStoryboard Storyboard="{StaticResource slideIn}" />
+                            <SoundPlayerAction Source="/Resources/SFX/failed.wav" />
                         </DataTrigger.EnterActions>
                     </DataTrigger>
                 </Style.Triggers>

@@ -162,6 +162,11 @@ namespace CyberPuzzle.Model
         public void ForceGameOver()
         {
             Index = SelectedWords.Count;
+            foreach (var obj in Objectives)
+            {
+                if (!obj.IsFinished)
+                    obj.CannotFinish = true;
+            }
             mainVM.BreachTimeVM.StopTimer();
         }
 

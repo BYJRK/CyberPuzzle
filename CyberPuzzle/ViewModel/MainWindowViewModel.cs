@@ -29,22 +29,22 @@ namespace CyberPuzzle.ViewModel
                 {
                     case "EASY":
                         GameLevel.NewPuzzle(RandomHelper.NextInteger(1, 2));
-                        BreachTimeVM.StartTimer(30);
+                        BreachTimeVM.StartTimer(45);
                         break;
                     case "MEDIUM":
                         GameLevel.NewPuzzle(RandomHelper.NextInteger(3, 4));
-                        BreachTimeVM.StartTimer(45);
+                        BreachTimeVM.StartTimer(60);
                         break;
                     case "HARD":
                         GameLevel.NewPuzzle(RandomHelper.NextInteger(5, 6));
-                        BreachTimeVM.StartTimer(60);
+                        BreachTimeVM.StartTimer(90);
                         break;
                 }
                 CodeMatrixVM.UpdateAvailability();
             });
             QuitGameCommand = new RelayCommand(() => Application.Current.MainWindow.Close());
 
-            BreachTimeVM.StartTimer(30);
+            BreachTimeVM.StartTimer(45);
         }
 
         #endregion

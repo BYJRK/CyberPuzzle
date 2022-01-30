@@ -14,6 +14,15 @@
     <None Remove="Resources\Fonts\Rajdhani-Medium.ttf" />
     <None Remove="Resources\Fonts\Rajdhani-Regular.ttf" />
     <None Remove="Resources\Fonts\Rajdhani-SemiBold.ttf" />
+    <None Remove="Resources\SFX\click.wav" />
+    <None Remove="Resources\SFX\failed.mp3" />
+    <None Remove="Resources\SFX\failed.wav" />
+    <None Remove="Resources\SFX\installed.mp3" />
+    <None Remove="Resources\SFX\installed.wav" />
+    <None Remove="Resources\SFX\mousedown.mp3" />
+    <None Remove="Resources\SFX\mousedown.wav" />
+    <None Remove="Resources\SFX\mouseover.mp3" />
+    <None Remove="Resources\SFX\mouseover.wav" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +43,10 @@
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Fonts\Rajdhani-SemiBold.ttf" />
+    <Resource Include="Resources\SFX\click.wav" />
+    <Resource Include="Resources\SFX\failed.wav" />
+    <Resource Include="Resources\SFX\installed.wav" />
+    <Resource Include="Resources\SFX\mouseover.wav" />
   </ItemGroup>
 
 </Project>
