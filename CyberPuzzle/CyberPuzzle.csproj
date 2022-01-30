@@ -9,9 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Rajdhani-Bold.ttf" />
     <None Remove="Resources\Fonts\Rajdhani-Light.ttf" />
     <None Remove="Resources\Fonts\Rajdhani-Medium.ttf" />
     <None Remove="Resources\Fonts\Rajdhani-Regular.ttf" />
+    <None Remove="Resources\Fonts\Rajdhani-SemiBold.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Fonts\Rajdhani-Bold.ttf" />
     <Resource Include="Resources\Fonts\Rajdhani-Light.ttf">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
@@ -30,6 +33,7 @@
     <Resource Include="Resources\Fonts\Rajdhani-Regular.ttf">
       <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Fonts\Rajdhani-SemiBold.ttf" />
   </ItemGroup>
 
 </Project>

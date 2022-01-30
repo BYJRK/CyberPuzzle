@@ -4,5 +4,7 @@
     <FontFamily x:Key="Rajdhani">pack://application:,,,/Resources/Fonts/#Rajdhani</FontFamily>
     <FontFamily x:Key="RajdhaniMedium">pack://application:,,,/Resources/Fonts/#Rajdhani Medium</FontFamily>
     <FontFamily x:Key="RajdhaniLight">pack://application:,,,/Resources/Fonts/#Rajdhani Light</FontFamily>
+    <FontFamily x:Key="RajdhaniBold">pack://application:,,,/Resources/Fonts/#Rajdhani Bold</FontFamily>
+    <FontFamily x:Key="RajdhaniSemiBold">pack://application:,,,/Resources/Fonts/#Rajdhani SemiBold</FontFamily>
 
 </ResourceDictionary>
