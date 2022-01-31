@@ -95,14 +95,30 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Text" Value="{Binding Word}" />
                 <Setter Property="FontFamily" Value="{StaticResource RajdhaniMedium}" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                        <Setter Property="Foreground" Value="{StaticResource HighlightCyanBrush}" />
+                    </DataTrigger>
+                </Style.Triggers>
             </Style>
             <Style TargetType="Rectangle">
                 <Setter Property="Stroke" Value="{StaticResource ForegroundYellowBrush}" />
                 <Setter Property="StrokeThickness" Value="1.5" />
                 <Setter Property="StrokeDashOffset" Value="1" />
                 <Style.Triggers>
-                    <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                    <DataTrigger Binding="{Binding Word}" Value="{x:Null}">
                         <Setter Property="StrokeDashArray" Value="5,4" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                        <Setter Property="Fill" Value="{StaticResource BackgroundDarkBrush}" />
+                        <Setter Property="Stroke" Value="{StaticResource HighlightCyanBrush}" />
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect ShadowDepth="0"
+                                                  BlurRadius="20"
+                                                  Color="{StaticResource HighlightCyan}" />
+                            </Setter.Value>
+                        </Setter>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>

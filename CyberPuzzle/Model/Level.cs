@@ -52,15 +52,13 @@ namespace CyberPuzzle.Model
         [DoNotNotify]
         public (int X, int Y) CurrentPosition { get; set; } = (-1, 0);
 
-        [DoNotNotify]
-        public (int X, int Y) CurrentCursorPosition { get; set; }
-
         /// <summary>
         /// the current direction, where true stands for horizontal
         /// </summary>
         [DoNotNotify]
         public bool Direction { get; set; } = true;
 
+        [DoNotNotify]
         public MainWindowViewModel mainVM { get; set; }
 
         #region Private Methods
@@ -153,7 +151,7 @@ namespace CyberPuzzle.Model
         /// <param name="piece"></param>
         public void Append(Piece piece)
         {
-            SelectedWords[Index++] = piece;
+            SelectedWords[Index++] = new Piece(piece.Word, default);
         }
 
         /// <summary>
@@ -177,7 +175,7 @@ namespace CyberPuzzle.Model
         {
             SelectedWords.Clear();
             for (int i = 0; i < count; i++)
-                SelectedWords.Add(null);
+                SelectedWords.Add(new Piece(null, default));
             Index = 0;
         }
 

@@ -28,10 +28,12 @@ namespace CyberPuzzle.ViewModel
             {
                 UpdateHighlight(piece);
                 UpdateHighlightObjective(piece);
+                UpdateBufferHighlight(piece);
             });
             PieceMouseLeaveCommand = new RelayCommand<Piece>(piece =>
             {
                 UpdateHighlightObjective(null);
+                UpdateBufferHighlight(null);
             });
 
             UpdateAvailability();
@@ -89,6 +91,28 @@ namespace CyberPuzzle.ViewModel
         }
 
         /// <summary>
+        /// update the highlight property of all pieces in the buffer
+        /// </summary>
+        private void UpdateBufferHighlight(Piece piece)
+        {
+            // this should never happen because once the game is over, the puzzle board is disabled
+            // and hence the mouseover event shall never be triggerred
+            if (GameLevel.Index == GameLevel.SelectedWords.Count)
+                return;
+
+            if (piece == null)
+            {
+                GameLevel.SelectedWords[GameLevel.Index].Word = null;
+                GameLevel.SelectedWords[GameLevel.Index].IsHighlighted = false;
+            }
+            else
+            {
+                GameLevel.SelectedWords[GameLevel.Index].Word = piece.Word;
+                GameLevel.SelectedWords[GameLevel.Index].IsHighlighted = true;
+            }
+        }
+
+        /// <summary>
         /// update the objectives' IsFinished status
         /// </summary>
         private void UpdateFinishStatus()
@@ -116,7 +140,7 @@ namespace CyberPuzzle.ViewModel
                 return idx;
             }
 
-            var current = GameLevel.SelectedWords.Where(p => p != null).Select(p => p.Word).ToArray();
+            var current = GameLevel.SelectedWords.Where(p => p.Word != null).Select(p => p.Word).ToArray();
             foreach (var obj in GameLevel.Objectives)
             {
                 // skip if this row has already been marked as finished or cannot finish
