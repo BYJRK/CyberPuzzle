@@ -1,5 +1,6 @@
 ﻿using CyberPuzzle.Model;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using PropertyChanged;
 using System;
 using System.Windows.Threading;
 
@@ -9,14 +10,20 @@ namespace CyberPuzzle.ViewModel
     {
         private const double Period = 0.01;
 
+        /// <summary>
+        /// the dispatch timer used to count down
+        /// </summary>
+        [DoNotNotify]
         public DispatcherTimer Timer { get; set; }
 
+        [DoNotNotify]
         public Level GameLevel { get; set; }
 
         public double RemainingTime { get; set; }
 
         public double TotalTime { get; set; }
 
+        [DependsOn(nameof(RemainingTime), nameof(TotalTime))]
         public double Percent => RemainingTime / TotalTime * 100;
 
         public BreachTimeViewModel(Level level)
@@ -30,6 +37,9 @@ namespace CyberPuzzle.ViewModel
         }
 
         private DateTime lastTick;
+        /// <summary>
+        /// the function the timer do in its every tick
+        /// </summary>
         private void Tick(object sender, EventArgs e)
         {
             RemainingTime -= (DateTime.Now - lastTick).TotalSeconds;
@@ -42,11 +52,19 @@ namespace CyberPuzzle.ViewModel
             }
         }
 
-        public void Reset(int time = 60)
+        /// <summary>
+        /// reset the <see cref="RemainingTime"/> and <see cref="TotalTime"/>
+        /// </summary>
+        /// <param name="time"></param>
+        private void Reset(int time = 60)
         {
             RemainingTime = TotalTime = time;
         }
 
+        /// <summary>
+        /// when start a new puzzle, restart the timer
+        /// </summary>
+        /// <param name="time"></param>
         public void StartTimer(int time = 60)
         {
             Reset(time);
@@ -54,7 +72,10 @@ namespace CyberPuzzle.ViewModel
             Timer.Start();
         }
 
-        internal void StopTimer()
+        /// <summary>
+        /// stop the timer when the game is finished early because no more quiz can be finished
+        /// </summary>
+        public void StopTimer()
         {
             Timer.Stop();
         }
