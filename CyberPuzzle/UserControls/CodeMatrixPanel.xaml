@@ -9,9 +9,11 @@
              Name="userControl"
              d:DesignHeight="450"
              d:DesignWidth="500"
-             d:DataContext="{x:Static vm:CodeMatrixViewModel.Demo}"
              d:Background="#333"
              mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:CodeMatrixViewModel />
+    </UserControl.DataContext>
 
     <Border HorizontalAlignment="Stretch"
             VerticalAlignment="Top"
@@ -27,16 +29,46 @@
                     <Canvas Width="20"
                             Height="20"
                             Margin="10,5,5,5">
-                        <!--upper-->
-                        <Path Data="M0,0 0,9 6,9 1,0 0,0" Fill="Black"/>
-                        <Path Data="M0.25,0.25 4.75,8.75 5.75,8.75 5.75,0.25 z" Stroke="Black" Canvas.Left="3" StrokeThickness="0.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeLineJoin="Miter" Stretch="None" StrokeMiterLimit="18"/>
-                        <Path Data="M0.25,0.25 0.25,8.75 5.75,8.75 1.25,0.25 0.25,0.25 z" Stroke="Black" StrokeThickness="0.5" Canvas.Left="11"/>
-                        <Path Data="M0.25,0.25 4.75,8.75 5.75,8.75 5.75,0.25 z" Stroke="Black" Canvas.Left="14" StrokeThickness="0.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeLineJoin="Miter" Stretch="None" StrokeMiterLimit="18"/>
-                        <!--lower-->
-                        <Path Data="M0,0 0,9 6,9 1,0 0,0" Fill="Black" Canvas.Top="11"/>
-                        <Path Data="M0,0 5,9 6,9 6,0" Fill="Black" Canvas.Top="11" Canvas.Left="3"/>
-                        <Path Data="M0,0 0,9 6,9 1,0 0,0" Fill="Black" Canvas.Top="11" Canvas.Left="11"/>
-                        <Path Data="M0,0 5,9 6,9 6,0" Fill="Black" Canvas.Top="11" Canvas.Left="14"/>
+                        <!-- upper -->
+                        <Path Data="M0,0 0,9 6,9 1,0 0,0" Fill="Black" />
+                        <Path Canvas.Left="3"
+                              Data="M0.25,0.25 4.75,8.75 5.75,8.75 5.75,0.25 z"
+                              Stroke="Black"
+                              StrokeThickness="0.5"
+                              StrokeStartLineCap="Square"
+                              StrokeEndLineCap="Square"
+                              StrokeLineJoin="Miter"
+                              Stretch="None"
+                              StrokeMiterLimit="18" />
+                        <Path Canvas.Left="11"
+                              Data="M0.25,0.25 0.25,8.75 5.75,8.75 1.25,0.25 0.25,0.25 z"
+                              Stroke="Black"
+                              StrokeThickness="0.5" />
+                        <Path Canvas.Left="14"
+                              Data="M0.25,0.25 4.75,8.75 5.75,8.75 5.75,0.25 z"
+                              Stroke="Black"
+                              StrokeThickness="0.5"
+                              StrokeStartLineCap="Square"
+                              StrokeEndLineCap="Square"
+                              StrokeLineJoin="Miter"
+                              Stretch="None"
+                              StrokeMiterLimit="18" />
+                        <!-- lower -->
+                        <Path Canvas.Top="11"
+                              Data="M0,0 0,9 6,9 1,0 0,0"
+                              Fill="Black" />
+                        <Path Canvas.Left="3"
+                              Canvas.Top="11"
+                              Data="M0,0 5,9 6,9 6,0"
+                              Fill="Black" />
+                        <Path Canvas.Left="11"
+                              Canvas.Top="11"
+                              Data="M0,0 0,9 6,9 1,0 0,0"
+                              Fill="Black" />
+                        <Path Canvas.Left="14"
+                              Canvas.Top="11"
+                              Data="M0,0 5,9 6,9 6,0"
+                              Fill="Black" />
                     </Canvas>
                     <TextBlock Margin="5"
                                FontFamily="{StaticResource RajdhaniMedium}"

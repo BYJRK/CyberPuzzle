@@ -1,4 +1,5 @@
 ﻿using CyberPuzzle.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System.Linq;
@@ -8,13 +9,11 @@ namespace CyberPuzzle.ViewModel
 {
     public class CodeMatrixViewModel : ObservableObject
     {
-        public static CodeMatrixViewModel Demo => new CodeMatrixViewModel(new Level());
-
         public Level GameLevel { get; set; }
 
-        public CodeMatrixViewModel(Level level)
+        public CodeMatrixViewModel()
         {
-            GameLevel = level;
+            GameLevel = App.Current.Services.GetService<Level>();
             PieceClickCommand = new RelayCommand<Piece>(piece =>
             {
                 piece.IsSelected = true;

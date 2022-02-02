@@ -1,6 +1,8 @@
 ﻿using CyberPuzzle.Helpers;
+using CyberPuzzle.Messages;
 using CyberPuzzle.ViewModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using PropertyChanged;
 using System;
 using System.Collections.ObjectModel;
@@ -8,7 +10,7 @@ using System.Linq;
 
 namespace CyberPuzzle.Model
 {
-    public class Level : ObservableObject
+    public class Level : ObservableObject, IDesignTimeDemo<Level>
     {
         /// <summary>
         /// all possible words
@@ -57,9 +59,6 @@ namespace CyberPuzzle.Model
         /// </summary>
         [DoNotNotify]
         public bool Direction { get; set; } = true;
-
-        [DoNotNotify]
-        public MainWindowViewModel mainVM { get; set; }
 
         #region Private Methods
 
@@ -165,7 +164,7 @@ namespace CyberPuzzle.Model
                 if (!obj.IsFinished)
                     obj.CannotFinish = true;
             }
-            mainVM.BreachTimeVM.StopTimer();
+            WeakReferenceMessenger.Default.Send(new StopTimerMessage(null));
         }
 
         /// <summary>

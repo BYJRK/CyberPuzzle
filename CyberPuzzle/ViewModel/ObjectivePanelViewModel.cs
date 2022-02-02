@@ -1,4 +1,5 @@
 ﻿using CyberPuzzle.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System.Windows.Input;
@@ -7,21 +8,10 @@ namespace CyberPuzzle.ViewModel
 {
     public class ObjectivePanelViewModel : ObservableObject
     {
-        public Level GameLevel { get; set; }
+        public Level GameLevel { get; private set; } = App.Current.Services.GetService<Level>();
 
-        public static ObjectivePanelViewModel Demo => new ObjectivePanelViewModel(new Level
+        public ObjectivePanelViewModel()
         {
-            Objectives = new(new[]
-            {
-                new Objective(new[] { "FF", "BD", "7A" }),
-                new Objective(new[] { "7A", "55", "FF", "1C" })
-            })
-        });
-
-        public ObjectivePanelViewModel(Level level)
-        {
-            GameLevel = level;
-
             MouseEnterCommand = new RelayCommand<string>(s =>
             {
                 UpdateIsHinted(s);

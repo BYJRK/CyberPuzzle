@@ -1,5 +1,8 @@
-﻿using CyberPuzzle.Model;
+﻿using CyberPuzzle.Messages;
+using CyberPuzzle.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using PropertyChanged;
 using System;
 using System.Windows.Threading;
@@ -17,7 +20,7 @@ namespace CyberPuzzle.ViewModel
         public DispatcherTimer Timer { get; set; }
 
         [DoNotNotify]
-        public Level GameLevel { get; set; }
+        public Level GameLevel { get; set; } = App.Current.Services.GetService<Level>();
 
         public double RemainingTime { get; set; }
 
@@ -26,14 +29,17 @@ namespace CyberPuzzle.ViewModel
         [DependsOn(nameof(RemainingTime), nameof(TotalTime))]
         public double Percent => RemainingTime / TotalTime * 100;
 
-        public BreachTimeViewModel(Level level)
+        public BreachTimeViewModel()
         {
-            GameLevel = level;
-
             Reset(30);
 
             Timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(Period) };
             Timer.Tick += Tick;
+
+            WeakReferenceMessenger.Default.Register<StopTimerMessage>(this, (rec, mes) =>
+            {
+                StopTimer();
+            });
         }
 
         private DateTime lastTick;

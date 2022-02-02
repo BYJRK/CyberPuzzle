@@ -12,6 +12,7 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource BackgroundDarkBrush}"
         ResizeMode="CanMinimize"
+        d:Height="600"
         mc:Ignorable="d">
     <Window.DataContext>
         <vm:MainWindowViewModel />

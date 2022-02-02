@@ -1,5 +1,6 @@
 ﻿using CyberPuzzle.Helpers;
 using CyberPuzzle.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using System.Windows;
@@ -9,19 +10,18 @@ namespace CyberPuzzle.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
-        public Level GameLevel { get; set; }
+        public Level GameLevel { get; set; } = App.Current.Services.GetService<Level>();
 
         #region Constructor
 
         public MainWindowViewModel()
         {
-            GameLevel = new Level { mainVM = this };
             GameLevel.NewPuzzle(2);
 
-            BufferPanelVM = new(GameLevel);
-            CodeMatrixVM = new(GameLevel);
-            ObjectiveVM = new(GameLevel);
-            BreachTimeVM = new(GameLevel);
+            BufferPanelVM = new();
+            CodeMatrixVM = new();
+            ObjectiveVM = new();
+            BreachTimeVM = new();
 
             NewGameCommand = new RelayCommand<string>(cnt =>
             {
