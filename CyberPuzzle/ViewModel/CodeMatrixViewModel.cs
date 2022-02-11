@@ -13,7 +13,7 @@ namespace CyberPuzzle.ViewModel
 
         public CodeMatrixViewModel()
         {
-            GameLevel = App.Current.Services.GetService<Level>();
+            GameLevel = App.Services.GetService<Level>();
             PieceClickCommand = new RelayCommand<Piece>(piece =>
             {
                 piece.IsSelected = true;

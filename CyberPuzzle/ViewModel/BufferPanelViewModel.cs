@@ -19,7 +19,7 @@ namespace CyberPuzzle.ViewModel
             }
         }
 
-        public Level GameLevel { get; private set; } = App.Current.Services.GetService<Level>();
+        public Level GameLevel { get; private set; } = App.Services.GetService<Level>();
 
         public BufferPanelViewModel()
         {

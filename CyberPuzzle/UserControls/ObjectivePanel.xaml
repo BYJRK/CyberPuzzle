@@ -8,7 +8,6 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DesignHeight="150"
              d:DesignWidth="500"
-             d:DataContext="{x:Static vm:ObjectivePanelViewModel.Demo}"
              mc:Ignorable="d">
 
     <Border HorizontalAlignment="Stretch"

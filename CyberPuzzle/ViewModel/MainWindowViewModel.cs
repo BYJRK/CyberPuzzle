@@ -10,7 +10,7 @@ namespace CyberPuzzle.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
     {
-        public Level GameLevel { get; set; } = App.Current.Services.GetService<Level>();
+        public Level GameLevel { get; set; } = App.Services.GetService<Level>();
 
         #region Constructor
 

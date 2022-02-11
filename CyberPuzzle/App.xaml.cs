@@ -1,6 +1,5 @@
 ﻿using CyberPuzzle.Helpers;
 using CyberPuzzle.Model;
-using CyberPuzzle.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
@@ -14,9 +13,12 @@ namespace CyberPuzzle
     {
         public App()
         {
-            Services = ConfigureServices();
-
             InitializeComponent();
+        }
+
+        static App()
+        {
+            Services = ConfigureServices();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -27,9 +29,7 @@ namespace CyberPuzzle
             wnd.Show();
         }
 
-        public new static App Current => (App)Application.Current;
-
-        public IServiceProvider Services { get; private set; }
+        public static IServiceProvider Services { get; private set; }
 
         #region IoC
 

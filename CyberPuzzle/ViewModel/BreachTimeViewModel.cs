@@ -20,7 +20,7 @@ namespace CyberPuzzle.ViewModel
         public DispatcherTimer Timer { get; set; }
 
         [DoNotNotify]
-        public Level GameLevel { get; set; } = App.Current.Services.GetService<Level>();
+        public Level GameLevel { get; set; } = App.Services.GetService<Level>();
 
         public double RemainingTime { get; set; }
 
